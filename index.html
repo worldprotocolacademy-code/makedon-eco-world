@@ -31,12 +31,14 @@
             selector.appendChild(option);
           }
           selector.addEventListener('change', async function(e) {
-            if (typeof window.ecoTranslate.setLanguage === 'function') {
-              await window.ecoTranslate.setLanguage(e.target.value);
-              // Преведи ги елементите со data-translate-key
-              const elements = document.querySelectorAll('[data-translate-key]');
-              if (elements.length > 0 && window.ecoTranslateInstance) {
-                await window.ecoTranslateInstance.translateUI(Array.from(elements), e.target.value);
+            // 🌐 Иницијализирај превод (користи го inline MEWTranslate)
+if (typeof window.MEWTranslate !== 'undefined') {
+  window.MEWTranslate.translate('mk');
+  const langSel = document.getElementById('language-selector');
+  if (langSel) {
+    langSel.addEventListener('change', e => window.MEWTranslate.translate(e.target.value));
+  }
+}
               }
             }
           });
@@ -1817,7 +1819,7 @@ if (typeof window !== 'undefined') {
       if (state.cameraStream) { state.cameraStream.getTracks().forEach(track => track.stop()); state.cameraStream = null; }
     }
     function openModal(modalId) { document.getElementById(modalId).classList.add('active'); if (modalId === 'scanModal') initMap(); }
-    function handleLogin(e) {
+    async function handleLogin(e) {
       e.preventDefault();
       const email = document.getElementById('email').value;
       state.currentUser = { id: 'user_' + Date.now(), name: email.split('@')[0], email: email, country: 'MK', language: 'mk' };
@@ -1844,7 +1846,7 @@ if (typeof window !== 'undefined') {
 ## AI Агенти: Qwen (верификација), GPT (конверзација), Claude (комплајанса), Harvey (финансии)
 ## Финансиски: 1 сисе = 1 EcoPoint = €${CONFIG.baseValueEur} | Провизија: ${(CONFIG.platformFeePercent*100).toFixed(0)}%
 ## Безбедност: TLS 1.3+, PCI DSS, 2FA, токенизација
-## Нивоа: ${CONFIG.levels.map(l => `${l.icon} ${l.name}: ${l.threshold}+ поени`).join(' | ')}
+## Нивоа: ${CONFIG.levels.map(l => `${l.icon} ${l.name}: ${l.threshold}+ поени`)].join('\n');
 *Генерирано: ${new Date().toISOString()} | Верзија: 1.0.0*`;
       const blob = new Blob([specs], { type: 'text/markdown' });
       const url = URL.createObjectURL(blob);
@@ -1852,18 +1854,33 @@ if (typeof window !== 'undefined') {
       URL.revokeObjectURL(url);
       showToast('Преземено!', 'Спецификациите се преземени. 📄', 'success');
     }
-    function calculateEarnings() {
-      const bottles = parseInt(document.getElementById('bottles')?.value) || 0;
-      const cans = parseInt(document.getElementById('cans')?.value) || 0;
-      const total = bottles + cans;
-      const country = document.getElementById('country')?.value || 'global';
-      // ✅ РЕАЛИСТИЧНИ СТАПКИ ЗА МК: 0.03€ = ~1.8 МКД по предмет (конзервативно)
-      const rates = { mk: 0.03, de: 0.25, no: 0.23, us: 0.10, global: 0.18 };
-      const euroValue = (total * (rates[country] || rates.global)).toFixed(2);
-      const resultEl = document.getElementById('resultValue'), pointsEl = document.getElementById('resultPoints');
-      if (resultEl && pointsEl) { resultEl.textContent = `€${euroValue}`; pointsEl.textContent = total; resultEl.classList.add('result-pulse'); setTimeout(() => resultEl.classList.remove('result-pulse'), 2000); }
-    }
-
+    function downloadSpecs(type = 'general') {
+  const specs = {
+    general: `# Makedon Eco World – Технички Спецификации
+## Контакти: ${CONFIG.contactEmail}
+## API Base: ${CONFIG.apiBaseUrl}
+## Финансиски: 1 сисе = 1 EcoPoint = €${CONFIG.baseValueEur}
+*Генерирано: ${new Date().toISOString()} | Верзија: 1.0.0*`,
+    b2b: `# Makedon Eco World – B2B Партнерски Пакет
+## 🏭 B2B Raw Materials Marketplace
+### Достапни Материјали:
+• rPET (чист): €0.72-0.93/kg
+• rHDPE: €0.55-0.72/kg
+• Алуминиум: €1.02-1.36/kg
+## Контакти:
+📧 partnerships@makedonecoworld.com
+*Генерирано: ${new Date().toISOString()} | Верзија: B2B-1.0*`
+  };
+  const content = specs[type] || specs.general;
+  const blob = new Blob([content], { type: 'text/markdown' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = type === 'b2b' ? 'MEW_B2B_Partnership_Package.md' : 'MakedonEcoWorld_Specs.md';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('📥 Преземено!', `Пакетот ${type.toUpperCase()} е преземен.`, 'success');
+}
     // ==================== GLOBAL MALLS & EUROPEAN PARTNERS LOGIC ====================
     const PARTNERS = [
       // 🇪🇺 ЕВРОПСКИ ПАРТНЕРИ
