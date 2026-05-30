@@ -18,17 +18,13 @@
   <script>
     // Иницијализација на преводот после вчитување
     document.addEventListener('DOMContentLoaded', function() {
-      if (typeof window.EcoTranslate !== 'undefined') {
-        window.ecoTranslate = new window.EcoTranslate({ defaultLang: 'mk' });
-        // Пополни го селекторот за јазик
-        const selector = document.getElementById('language-selector');
-        if (selector && window.ecoTranslate?.config?.languages) {
-          for (const [code, name] of Object.entries(window.ecoTranslate.config.languages)) {
-            const option = document.createElement('option');
-            option.value = code;
-            option.textContent = name;
-            if (code === (window.ecoTranslate.currentLang || 'mk')) option.selected = true;
-            selector.appendChild(option);
+      // 🌐 Иницијализирај превод (работи без надворешен фајл)
+if (typeof window.MEWTranslate !== 'undefined') {
+  window.MEWTranslate.translate('mk');
+  const langSel = document.getElementById('language-selector');
+  if (langSel) {
+    langSel.addEventListener('change', e => window.MEWTranslate.translate(e.target.value));
+  }
           }
           selector.addEventListener('change', async function(e) {
             if (typeof window.ecoTranslate.setLanguage === 'function') {
