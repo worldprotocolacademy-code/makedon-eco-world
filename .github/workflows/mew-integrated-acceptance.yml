@@ -1,0 +1,23 @@
+name: MEW integrated v11 acceptance
+on:
+  push:
+    branches:
+      - feat/mew-v11-green-bridge
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  accept:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node tests/integrated-v11-smoke.cjs --static
+      - run: npm install --no-save --no-package-lock playwright@1.56.1
+      - run: npx playwright install --with-deps chromium
+      - run: node tests/integrated-v11-smoke.cjs

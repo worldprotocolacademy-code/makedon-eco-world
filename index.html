@@ -32,9 +32,9 @@
 <html lang="mk">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <title>🌍 Makedon Eco World v10.0 – Светска Платформа за Рециклирање | Doc. d-r Sande Smiljanov</title>
-  <meta name="description" content="Собирај шишиња, добивај EcoPoints, конвертирај во пари или награди. Глобално. Безбедно. Автоматизирано."/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Makedon Eco World v11.0 – European Circular Economy Pilot | World Protocol Academy</title>
+  <meta name="description" content="Makedon Eco World — development pilot for packaging collection, circular economy and citizen participation. No active financial services."/>
   <meta name="theme-color" content="#2ecc71"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,6 +51,8 @@
   <script>
 
     // ==================== GLOBAL TRANSLATION DICTIONARY ====================
+    function mewSafeGet(k){try{return localStorage.getItem(k)}catch{return null}}
+    function mewSafeSet(k,v){try{localStorage.setItem(k,v)}catch{}}
     const TRANSLATIONS = {
       // ===== NAVIGATION =====
       nav_home: {
@@ -616,12 +618,12 @@
       const elements = document.querySelectorAll('[data-translate-key]');
       elements.forEach(el => {
         const key = el.getAttribute('data-translate-key');
-        if (TRANSLATIONS[key] && TRANSLATIONS[key][lang]) {
+        if (TRANSLATIONS[key] && (TRANSLATIONS[key][lang] || TRANSLATIONS[key].mk)) {
           // For input placeholders, update placeholder
           if (el.hasAttribute('placeholder') && el.tagName === 'INPUT') {
-            el.setAttribute('placeholder', TRANSLATIONS[key][lang]);
+            el.setAttribute('placeholder', (TRANSLATIONS[key][lang] || TRANSLATIONS[key].mk));
           } else {
-            el.textContent = TRANSLATIONS[key][lang];
+            el.textContent = TRANSLATIONS[key][lang] || TRANSLATIONS[key].mk;
           }
         }
       });
@@ -629,13 +631,13 @@
       document.documentElement.lang = lang;
       document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
       // Store preference
-      localStorage.setItem('mew_lang', lang);
+      mewSafeSet('mew_lang', lang);
       console.log('🌐 Translated to:', lang);
     }
 
     // Init translation on load
     document.addEventListener('DOMContentLoaded', function() {
-      const savedLang = localStorage.getItem('mew_lang') || 'mk';
+      const savedLang = mewSafeGet('mew_lang') || 'mk';
       translatePage(savedLang);
       const langSel = document.getElementById('language-selector');
       if (langSel) {
@@ -946,6 +948,60 @@
     /* ===== FOCUS OUTLINE ===== */
     :focus-visible{outline:2px solid #00c853;outline-offset:3px}
 </style>
+<style id="mew-v11-integrated-style">
+/* Mobile acceptance: keep content inside the viewport; tables scroll locally. */
+@media(max-width:768px){
+ .container,.header-content,.section,.hero,footer,.cta{min-width:0;max-width:100%;overflow-wrap:anywhere}
+ .container{width:100%;padding-inline:16px}
+ .section [style*="grid-template-columns"],.grid,.calc-grid,.mall-grid,.footer-grid,.roi-grid{grid-template-columns:minmax(0,1fr)!important}
+ .section [style*="display:grid"]>*,.grid>*,.calc-grid>*,.mall-grid>*,.footer-grid>*{min-width:0;max-width:100%}
+ .section [style*="display:flex"],.mew-links,.hero-stats,.auth-buttons{flex-wrap:wrap;min-width:0;max-width:100%}
+ .section [style*="display:flex"]>*{min-width:0;max-width:100%}
+ .section [style*="padding:2.5rem"],.section [style*="padding:3rem"],.section [style*="padding:2rem"],.calculator,.modal-content{padding:1rem!important}
+ .section table{display:block;width:100%!important;max-width:100%;overflow-x:auto}
+ .section th,.section td{overflow-wrap:anywhere}
+ .section img,.section video,.section iframe,.section input,.section select,.section textarea,.section button,.section a.btn{max-width:100%}
+ .section pre,.section code{white-space:pre-wrap;overflow-wrap:anywhere}
+ .hero h1{font-size:clamp(1.8rem,8vw,2.6rem)!important;letter-spacing:-.04em}
+ .hero .stat-card{min-width:0;flex:1 1 132px;padding:1rem}
+ .hero .stat-number{font-size:clamp(1.25rem,5vw,2rem)}
+ header .header-content{gap:.6rem}
+ header .logo{max-width:100%;font-size:1.1rem}
+ .modal{padding:12px}
+ #toast{max-width:calc(100vw - 32px);right:16px}
+ .btn,.mew-banner{overflow-wrap:anywhere;white-space:normal}
+}
+@media(max-width:480px){
+ .levels{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:.5rem}
+ .level-badge.active{transform:none}
+ .section-title h2{font-size:1.65rem}
+ .section{padding:2.75rem 0}
+ .mew-bridge-grid{grid-template-columns:minmax(0,1fr)}
+ .mew-frame{max-width:100%}
+}
+
+.mew-banner{background:#fff4db;border-left:5px solid #92601b;padding:15px 18px;margin:16px auto;color:#3e2b13;border-radius:10px;line-height:1.55;font-size:.95rem;max-width:1320px}
+.mew-banner a{color:#174c38;text-decoration:underline}
+.mew-hr-summary{background:#eaf7ef;color:#134f36;padding:10px 14px;border-radius:8px;margin-top:10px;font-size:.95rem;text-align:left}
+.mew-hr-summary[hidden]{display:none!important}
+.mew-integration{background:linear-gradient(135deg,#f4fff8,#e1f4ed);color:#123c2b}
+.mew-integration .section-title p{color:#304e40}
+.mew-bridge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:18px;margin:1.5rem 0}
+.mew-bridge-grid article{background:#fff;border:1px solid #c5e1d1;border-radius:16px;padding:22px;box-shadow:var(--card-shadow)}
+.mew-bridge-grid a,.mew-links a{color:#126342;text-decoration:underline;overflow-wrap:anywhere}
+.mew-bridge-grid h3{margin-bottom:.6rem;color:#134f36}
+.mew-links{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:1rem 0}
+.mew-links a.btn-primary{color:#fff}
+.mew-frame{display:block;width:100%;height:970px;border:1px solid #bddcc8;border-radius:14px;background:#fff}
+.mew-status{border:1px solid #c8e2d3;border-radius:14px;padding:24px;background:#fff;color:#172f23}
+.mew-form-input{width:100%;padding:12px;border:2px solid #c8ddd0;border-radius:10px;margin:8px 0;font:inherit}
+.mew-form-input:focus,.mew-links a:focus-visible{outline:3px solid #1a7850;outline-offset:2px}
+.mew-note{font-size:.87rem;color:#355346;margin:.75rem 0;line-height:1.5}
+.mew-modal-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+#map{display:flex;align-items:center;justify-content:center;min-height:260px}
+#map.leaflet-container{display:block}
+@media(max-width:600px){.mew-frame{height:1100px}.mew-banner{margin:12px}.mew-bridge-grid article{padding:16px}.mew-status{padding:16px}#investor-roi .roi-grid{grid-template-columns:1fr!important}}
+</style>
 </head>
 <body>
   <!-- ===== HEADER ===== -->
@@ -954,7 +1010,7 @@
       <div class="logo" onclick="scrollToTop()">
         <span style="width:32px;height:32px;background:var(--gradient);border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0">🌱</span>
         <span style="font-family:var(--font-display)">Makedon <span style="color:#00c853">Eco</span> World</span>
-        <span style="font-size:.55rem;background:rgba(0,200,83,.2);color:#00c853;border:1px solid rgba(0,200,83,.3);padding:2px 7px;border-radius:10px;font-weight:700;letter-spacing:.5px;align-self:center">v10</span>
+        <span style="font-size:.55rem;background:rgba(0,200,83,.2);color:#00c853;border:1px solid rgba(0,200,83,.3);padding:2px 7px;border-radius:10px;font-weight:700;letter-spacing:.5px;align-self:center">v11</span>
       </div>
       <nav>
         <button class="nav-mobile-toggle" onclick="document.querySelector('nav ul').classList.toggle('open')" aria-label="Menu" style="display:none;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:1rem">☰</button>
@@ -962,6 +1018,8 @@
           <li><a href="#" class="active" data-translate-key="nav_home">Дома</a></li>
           <li><a href="#global" data-translate-key="nav_global">Глобално</a></li>
           <li><a href="#features" data-translate-key="nav_features">Карактеристики</a></li>
+          <li><a href="#green-bridge" data-translate-key="nav_green">Зелен мост</a></li>
+          <li><a href="#eco-ledger" data-translate-key="nav_ledger">Еко-дневник</a></li>
           <li><a href="#financial" data-translate-key="nav_financial">Финансии</a></li>
           <li><a href="#global-malls" data-translate-key="nav_partners">Партнери</a></li>
           <li><a href="#ai" data-translate-key="nav_ai">AI Агенти</a></li>
@@ -971,14 +1029,15 @@
         </ul>
       </nav>
       <div class="auth-buttons" style="display:flex;gap:.5rem;align-items:center">
-        <button onclick="openModal('loginModal')" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:8px 16px;border-radius:50px;cursor:pointer;font-size:.85rem;font-weight:500;transition:var(--transition);display:flex;align-items:center;gap:6px" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'"><i class="fas fa-user"></i> <span class="hide-mobile">Влез</span></button>
-        <button onclick="startScan()" style="background:var(--gradient);border:none;color:#fff;padding:8px 18px;border-radius:50px;cursor:pointer;font-size:.85rem;font-weight:700;box-shadow:var(--glow);transition:var(--transition);display:flex;align-items:center;gap:6px" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform=''"><i class="fas fa-qrcode"></i> <span class="hide-mobile">Скенирај</span></button>
+        <button onclick="openModal('loginModal')" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:8px 16px;border-radius:50px;cursor:pointer;font-size:.85rem;font-weight:500;transition:var(--transition);display:flex;align-items:center;gap:6px" onmouseover="this.style.background='rgba(255,255,255,.15)'" onmouseout="this.style.background='rgba(255,255,255,.08)'"><i class="fas fa-user"></i> <span class="hide-mobile" data-translate-key="btn_login">Еко-дневник</span></button>
+        <button onclick="startScan()" style="background:var(--gradient);border:none;color:#fff;padding:8px 18px;border-radius:50px;cursor:pointer;font-size:.85rem;font-weight:700;box-shadow:var(--glow);transition:var(--transition);display:flex;align-items:center;gap:6px" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform=''"><i class="fas fa-qrcode"></i> <span class="hide-mobile" data-translate-key="btn_scan">Провери баркод</span></button>
       </div>
       <select id="language-selector" style="padding:7px 12px;border-radius:50px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;font-weight:500;cursor:pointer;font-size:.85rem;backdrop-filter:blur(10px)">
         <option value="mk" selected>🇲🇰 МК</option>
         <option value="en">🇬🇧 EN</option>
         <option value="sq">🇦🇱 SQ</option>
         <option value="sr">🇷🇸 SR</option>
+        <option value="hr">🇭🇷 HR</option>
         <option value="bg">🇧🇬 BG</option>
         <option value="de">🇩🇪 DE</option>
         <option value="zh">🇨🇳 中文</option>
@@ -999,28 +1058,29 @@
     <div class="container" style="position:relative;z-index:1">
       <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(0,200,83,.1);border:1px solid rgba(0,200,83,.3);border-radius:50px;padding:6px 18px;margin-bottom:1.5rem;font-size:.85rem;color:#00c853;font-weight:600;letter-spacing:.5px">
         <span style="width:8px;height:8px;background:#00c853;border-radius:50%;animation:pulse 2s infinite"></span>
-        LIVE PLATFORM • v10.0 • 60+ COUNTRIES
+        <span data-translate-key="pilot_badge">ПИЛОТ / РАЗВОЈ • v11.0</span>
       </div>
       <h1 data-translate-key="hero_title" style="font-family:var(--font-display);font-size:clamp(2.8rem,6vw,5.5rem);font-weight:800;line-height:1.1;letter-spacing:-2px;color:#fff;margin-bottom:1.5rem">
         🌍 Makedon<br><span style="background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Eco World</span>
       </h1>
-      <p data-translate-key="hero_description" style="font-size:clamp(1rem,2vw,1.3rem);color:rgba(255,255,255,.75);max-width:700px;margin:0 auto 2.5rem;line-height:1.7;font-weight:300">Првата светска платформа за собирање шишиња со глобална валутизација. Секој предмет = 1 EcoPoint = Глобална вредност. Почиста планета, полн џеб!</p>
-      <p style="text-align:center;color:rgba(255,255,255,.5);font-size:.85rem;margin-top:1rem"><i class="fas fa-certificate" style="color:#00c853;margin-right:6px"></i> <strong style="color:rgba(255,255,255,.7)">Innovator & Patent Holder:</strong> Доц. д-р Санде Смиљанов &nbsp;|&nbsp; <a href="mailto:makedonecoworld@outlook.com" style="color:#00c853">makedonecoworld@outlook.com</a></p>
+      <p data-translate-key="hero_description" style="font-size:clamp(1rem,2vw,1.3rem);color:rgba(255,255,255,.75);max-width:700px;margin:0 auto 2.5rem;line-height:1.7;font-weight:300">Платформа во развој за собирање амбалажа, граѓанско учество и циркуларна економија. EcoPoints во пилотот се симболични, без парична вредност.</p>
+      <p style="text-align:center;color:rgba(255,255,255,.5);font-size:.85rem;margin-top:1rem"><i class="fas fa-certificate" style="color:#00c853;margin-right:6px"></i> <strong style="color:rgba(255,255,255,.7)">Innovator & Founder:</strong> Доц. д-р Санде Смиљанов &nbsp;|&nbsp; <a href="mailto:makedonecoworld@outlook.com" style="color:#00c853">makedonecoworld@outlook.com</a></p>
       <div class="auth-buttons" style="justify-content:center;margin-top:1rem">
         <button class="btn btn-white btn-cta" onclick="startScan()" data-translate-key="btn_start_now"><i class="fas fa-play-circle"></i> Започни Сега</button>
         <button class="btn btn-outline-white btn-cta" onclick="scrollToSection('howItWorks')" data-translate-key="btn_learn_more"><i class="fas fa-info-circle"></i> Како Работи</button>
       </div>
       <div class="hero-stats">
-        <div class="stat-card"><span class="stat-number">60+</span><span class="stat-label" data-translate-key="stat_countries">Земји</span></div>
-        <div class="stat-card"><span class="stat-number">98%</span><span class="stat-label" data-translate-key="stat_efficiency">Ефикасност</span></div>
-        <div class="stat-card"><span class="stat-number">€0.005</span><span class="stat-label" data-translate-key="stat_average">Просек/предмет</span></div>
+        <div class="stat-card"><span class="stat-number">Global</span><span class="stat-label" data-translate-key="stat_countries">Земји</span></div>
+        <div class="stat-card"><span class="stat-number">Pilot</span><span class="stat-label" data-translate-key="stat_efficiency">Ефикасност</span></div>
+        <div class="stat-card"><span class="stat-number">1:1</span><span class="stat-label" data-translate-key="stat_average">Просек/предмет</span></div>
         <div class="stat-card"><span class="stat-number" id="userPoints">0</span><span class="stat-label" data-translate-key="stat_your_points">Твои Поени</span></div>
-        <div class="stat-card"><span class="stat-number" id="co2Saved">0g</span><span class="stat-label">CO₂ Заштеден</span></div>
+        <div class="stat-card"><span class="stat-number" id="co2Saved">0</span><span class="stat-label" data-translate-key="hero_doc">Локално документирани единици</span></div>
       </div>
     </div>
   </section>
 
 
+  <div class="mew-banner" role="note" data-translate-key="status_desc">Независна развојна иницијатива. Локален дневник, GTIN проверка и сценарија се тестни алатки. Сите останати модули се проектни концепти, не активни услуги или потврдени партнерства.</div>
   <!-- ===== HOW IT WORKS ===== -->
   <section class="section" id="howItWorks" style="background:linear-gradient(135deg,#f8fffe,#ecfdf5)">
     <div class="container">
@@ -1045,23 +1105,44 @@
           <div style="width:60px;height:60px;background:var(--gradient);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;font-size:1.6rem;color:#fff">3</div>
           <div style="font-size:3rem;margin-bottom:1rem">💰</div>
           <h3 style="color:var(--dark);margin-bottom:.8rem">Заработи EcoPoints</h3>
-          <p style="color:#666;font-size:.95rem">Секое шише = 1 EcoPoint. Конвертирај во пари, ваучери, донации или NFT беџови!</p>
+          <p style="color:#666;font-size:.95rem">Една локално документирана единица = 1 симболичен EcoPoint. Нема парична конверзија.</p>
         </div>
         <div style="background:#fff;border-radius:var(--border-radius);padding:2.5rem 1.5rem;box-shadow:var(--card-shadow)">
           <div style="width:60px;height:60px;background:var(--gradient);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;font-size:1.6rem;color:#fff">🌍</div>
           <div style="font-size:3rem;margin-bottom:1rem">♻️</div>
           <h3 style="color:var(--dark);margin-bottom:.8rem">Помагаш на Планетата</h3>
-          <p style="color:#666;font-size:.95rem">Секое рециклирано шише заштедува 15g CO₂. 10,000 шишиња = едно засадено дрво!</p>
+          <p style="color:#666;font-size:.95rem">Евидентирај измерена маса и документирано предавање; CO₂ и рециклирање бараат независни докази.</p>
         </div>
       </div>
       <div style="background:var(--gradient);border-radius:var(--border-radius);padding:1.5rem;text-align:center;color:#fff">
-        <p style="font-size:1.1rem;margin:0"><i class="fas fa-lightbulb" style="margin-right:8px"></i> <strong>Факт:</strong> Германскиот Pfand систем постигнува 98% стапка на враќање. Со MEW — целиот свет може!</p>
+        <p style="font-size:1.1rem;margin:0"><i class="fas fa-lightbulb" style="margin-right:8px"></i> <strong>Факт:</strong> Европските системи се примери за учење; MEW не тврди остварени стапки на враќање.</p>
       </div>
     </div>
   </section>
 
+  
+<section class="section mew-integration" id="green-bridge" aria-labelledby="green-bridge-title">
+ <div class="container">
+  <div class="section-title"><h2 id="green-bridge-title" data-translate-key="bridge_title">🇲🇰 Скопје – Задар 🇭🇷 | Зелен мост</h2><p data-translate-key="bridge_desc">Предлог за доброволна македонско-хрватска пилот-соработка. Локални акции, измерени количества и документирани предавања; без потврдени партнерства.</p></div>
+  <div class="mew-bridge-grid">
+   <article><h3>🇭🇷 Hrvatska · FZOEU</h3><p data-translate-key="bridge_rate">Хрватска: 0,10 € за прифатлива амбалажа според FZOEU (20.5.2026). Исплата само преку соодветниот систем.</p><p><a href="https://www.fzoeu.hr/UserDocsImages/datoteke/POPIS%20NAKNADA%20gospodarenja%20OA%20u%20sustavu%20Fonda_20.5.2026..pdf" target="_blank" rel="noopener noreferrer">FZOEU · 20.5.2026</a></p><p><a href="https://www.cistoca-zadar.hr/" target="_blank" rel="noopener noreferrer" data-translate-key="bridge_zadar">Задар – официјални собирни извори</a></p></article>
+   <article><h3>🇲🇰 Македонија · Pakomak</h3><p data-translate-key="bridge_skopje">Македонија – официјална мрежа на Пакомак</p><p><a href="https://pakomak.mk/Pages/Index/povratni_vending_masini?selectPage=info_za_vending_masini_2" target="_blank" rel="noopener noreferrer">Pakomak · RVM</a></p><p><a href="#eco-ledger" data-translate-key="bridge_open">Отвори еко-дневник</a></p></article>
+   <article><h3>🇪🇺 PPWR · 2025/40</h3><p data-translate-key="bridge_eu">ЕУ: член 50 од Регулативата 2025/40 утврдува цел од најмалку 90% одделно собирање по маса за опфатената еднократна пластична и метална амбалажа за пијалаци до 1.1.2029.</p><p><a href="https://eur-lex.europa.eu/eli/reg/2025/40/oj" target="_blank" rel="noopener noreferrer">EUR-Lex · Regulation (EU) 2025/40</a></p></article>
+  </div>
+  <div class="mew-links"><a class="btn btn-primary" href="#eco-ledger" data-translate-key="bridge_open">Отвори еко-дневник</a><a class="btn btn-outline" href="docs/GREEN_BRIDGE_HR.md" data-translate-key="bridge_project">Проектен предлог на хрватски</a></div>
+ </div>
+</section>
+<section class="section mew-integration" id="eco-ledger" aria-labelledby="eco-ledger-title">
+ <div class="container"><div class="section-title"><h2 id="eco-ledger-title" data-translate-key="ledger_title">♻️ Еко-дневник и докази</h2><p data-translate-key="ledger_desc">Работен локален пилот: пријави, документирани предавања, симболични EcoPoints, CSV/JSON и печатење. Не е независна верификација или доказ за рециклирање.</p></div>
+ <p class="mew-note" data-translate-key="ledger_storage">Записите се чуваат во прелистувачот. Направете JSON резервна копија. Не внесувајте лични или чувствителни податоци.</p>
+ <div class="mew-links"><a href="pilot-v11/" class="btn btn-primary" data-translate-key="ledger_full">Отвори дневник на цел екран</a><a href="platform-v11/" class="btn btn-outline" data-translate-key="ledger_tools">Напредни алатки и проектен регистар</a></div>
+ <iframe id="mew-ledger-frame" class="mew-frame" title="EcoAction &amp; EcoProof — local citizen ledger / Eko-dnevnik" src="pilot-v11/" loading="lazy" referrerpolicy="no-referrer"></iframe>
+ </div>
+</section>
+
   <!-- ===== GLOBAL ANALYSIS ===== -->
   <section class="section" id="global">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title">
         <h2 data-translate-key="section_global_title">🌐 Глобална Анализа: Најдобрите Практики</h2>
@@ -1116,7 +1197,8 @@
             <div class="best-practice"><strong>Срцевина за нас:</strong> Партнерства со локални бизниси + поени за јавни услуги.</div>
           </div>
         </div>
-      </div>
+      <div class="card"><div class="card-header"><span class="country-flag">🇭🇷</span><span class="country-name">Hrvatska – FZOEU</span></div><div class="card-body"><p data-translate-key="bridge_rate">Хрватска: 0,10 € за прифатлива амбалажа според FZOEU (20.5.2026).</p><div class="card-stats"><div class="card-stat"><span class="card-stat-value">€0.10</span><span class="card-stat-label">Povratna naknada</span></div></div><p><a href="#green-bridge" data-translate-key="nav_green">Зелен мост</a> · <a href="https://www.fzoeu.hr/" target="_blank" rel="noopener noreferrer">FZOEU</a></p></div></div>
+</div>
     </div>
   </section>
 
@@ -1177,6 +1259,7 @@
             <label for="country">🌍 <span data-translate-key="calc_country">Земја за конверзија</span></label>
             <select id="country">
               <option value="mk">🇲🇰 Северна Македонија</option>
+              <option value="hr" data-translate-key="hr_country">🇭🇷 Хрватска</option>
               <option value="de">🇩🇪 Германија</option>
               <option value="no">🇳🇴 Норвешка</option>
               <option value="us">🇺🇸 САД</option>
@@ -1186,8 +1269,9 @@
         </div>
         <div class="calc-result">
           <span class="calc-result-label" data-translate-key="calc_result_label">Твојата неделна заработка:</span>
-          <span class="calc-result-value" id="resultValue">€0.13</span>
+          <span class="calc-result-value" id="resultValue">—</span>
           <span class="calc-result-currency"><span data-translate-key="calc_or">или</span> <span id="resultPoints">25</span> EcoPoints</span>
+          <p id="mew-rate-note" class="calc-result-note" role="status"></p>
           <p class="calc-result-note"><i class="fas fa-info-circle"></i> <span data-translate-key="calc_note">Конзервативна проценка. Вредноста варира според локалниот пазар.</span></p>
         </div>
       </div>
@@ -1196,19 +1280,15 @@
       <div style="background:#fff;border-radius:var(--border-radius);padding:2rem;box-shadow:var(--card-shadow);margin-top:2.5rem">
         <h3 style="color:var(--dark);margin-bottom:1rem;text-align:center;font-size:1.5rem"><i class="fas fa-globe-europe"></i> <span data-translate-key="map_title">Глобална Мрежа на Точки</span></h3>
         <p style="color:#666;text-align:center;max-width:700px;margin:0 auto 1.5rem" data-translate-key="map_desc">Платформата автоматски ги прикажува најблиските точки за враќање шишиња, без разлика каде си.</p>
-        <div id="map"></div>
-        <div class="map-legend">
-          <div class="legend-item"><span class="legend-dot pakomak"></span> Пакомак</div>
-          <div class="legend-item"><span class="legend-dot store"></span> Супермаркет</div>
-          <div class="legend-item"><span class="legend-dot vending"></span> Автомат</div>
-          <div class="legend-item"><span class="legend-dot mall"></span> Мол</div>
-        </div>
+        <div id="map"><span data-translate-key="map_desc">Картата ги покажува градовите, не потврдени собирни точки. За точни локации користете ги операторските извори.</span></div>
+        <div class="mew-links"><button class="btn btn-outline" type="button" onclick="initMap()" data-translate-key="map_open">Прикажи регионална карта (OpenStreetMap)</button><a href="https://pakomak.mk/Pages/Index/povratni_vending_masini?selectPage=info_za_vending_masini_2" target="_blank" rel="noopener noreferrer">Pakomak RVM</a><a href="https://www.cistoca-zadar.hr/" target="_blank" rel="noopener noreferrer">Čistoća Zadar</a></div>
       </div>
     </div>
   </section>
 
   <!-- ===== FINANCIAL ===== -->
   <section class="section" id="financial">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title">
         <h2 data-translate-key="section_financial_title">💰 Финансиски Модел</h2>
@@ -1261,6 +1341,7 @@
 
   <!-- ===== GLOBAL MALLS SECTION ===== -->
   <section class="section" id="global-malls">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title">
         <h2 data-translate-key="malls_title">🏢 Глобални Трговски Центри & Молови</h2>
@@ -1289,6 +1370,7 @@
 
   <!-- ===== CHINESE MANUFACTURING GIANTS & HYPERMARKETS ===== -->
   <section class="section" id="china-giants" style="background:linear-gradient(135deg,#fff5f5,#ffe0e0)">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title">
         <h2>🇨🇳 中国制造业巨头 & 大型商超</h2>
@@ -1466,6 +1548,7 @@
 
   <!-- ===== RVM MACHINE MANUFACTURERS ===== -->
   <section class="section" id="rvm-manufacturers" style="background:linear-gradient(135deg,#f0f4f8,#e8f5e9)">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title">
         <h2>🏭 Производители на Апарати за Шишиња (RVM)</h2>
@@ -1661,6 +1744,7 @@
 
 <!-- ===== EUROPEAN PARTNERS SECTION ===== -->
 <section class="section" id="european-partners" style="background:#fff">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
   <div class="container">
     <div class="section-title">
       <h2>🇪🇺 Европски Трговски Синџири & Партнери</h2>
@@ -1918,7 +2002,7 @@
         Контактирајте нѐ за стратешко партнерство и интеграција на рециклирачките системи.
       </p>
       <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap">
-        <a href="mailto:partnerships@makedonecoworld.com" class="btn btn-white btn-cta" style="padding:14px 32px;font-size:1.05rem">
+        <a href="mailto:makedonecoworld@outlook.com" class="btn btn-white btn-cta" style="padding:14px 32px;font-size:1.05rem">
           <i class="fas fa-envelope"></i> <span data-translate-key="btn_contact_partnerships">Контакт за Партнерства</span>
         </a>
         <button class="btn btn-outline-white btn-cta" style="padding:14px 32px;font-size:1.05rem" onclick="downloadSpecs()">
@@ -1930,6 +2014,7 @@
 </section>
   <!-- ===== B2B RAW MATERIALS MARKETPLACE ===== -->
 <section class="section" id="b2b-marketplace" style="background:linear-gradient(135deg,#f8f9fa 0%,#e8f5e9 100%)">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
   <div class="container">
     <div class="section-title">
       <h2>🏭 B2B Пазар за Рециклирани Суровини</h2>
@@ -2125,22 +2210,22 @@
   <div class="modal-content" style="max-width:600px">
     <button class="modal-close" onclick="closeModal('b2bContractModal')">&times;</button>
     <h3 style="color:var(--dark);margin-bottom:1.5rem"><i class="fas fa-handshake"></i> <span data-translate-key="b2b_modal_title">Побарај Договор за Соработка</span></h3>
-    <form id="b2bContractForm" onsubmit="handleB2BRequest(event)">
+    <form id="b2bContractForm" onsubmit="handleB2BRequest(event);return false;">
       <div style="margin-bottom:1rem">
-        <label style="display:block;margin-bottom:.5rem;font-weight:500" data-translate-key="b2b_label_company">Име на Компанијата *</label>
-        <input type="text" required placeholder="На пр. EcoPlast DOO" style="width:100%;padding:12px;border:2px solid #ddd;border-radius:10px">
+        <label for="mew-b2b-company" style="display:block;margin-bottom:.5rem;font-weight:500" data-translate-key="b2b_label_company">Име на Компанијата *</label>
+        <input id="mew-b2b-company" maxlength="120" type="text" required placeholder="На пр. EcoPlast DOO" style="width:100%;padding:12px;border:2px solid #ddd;border-radius:10px">
       </div>
       <div style="margin-bottom:1rem">
-        <label style="display:block;margin-bottom:.5rem;font-weight:500" data-translate-key="b2b_label_contact">Контакт Лице *</label>
-        <input type="text" required placeholder="Име и Презиме" style="width:100%;padding:12px;border:2px solid #ddd;border-radius:10px">
+        <label for="mew-b2b-contact" style="display:block;margin-bottom:.5rem;font-weight:500" data-translate-key="b2b_label_contact">Контакт Лице *</label>
+        <input id="mew-b2b-contact" maxlength="120" type="text" required placeholder="Име и Презиме" style="width:100%;padding:12px;border:2px solid #ddd;border-radius:10px">
       </div>
       <div style="margin-bottom:1rem">
-        <label style="display:block;margin-bottom:.5rem;font-weight:500" data-translate-key="b2b_label_email">Е-пошта *</label>
-        <input type="email" required placeholder="contact@company.com" style="width:100%;padding:12px;border:2px solid #ddd;border-radius:10px">
+        <label for="mew-b2b-email" style="display:block;margin-bottom:.5rem;font-weight:500" data-translate-key="b2b_label_email">Е-пошта *</label>
+        <input id="mew-b2b-email" maxlength="254" type="email" required placeholder="contact@company.com" style="width:100%;padding:12px;border:2px solid #ddd;border-radius:10px">
       </div>
       <div style="margin-bottom:1rem">
-        <label style="display:block;margin-bottom:.5rem;font-weight:500" data-translate-key="b2b_label_material">Интерес за Материјал *</label>
-        <select required style="width:100%;padding:12px;border:2px solid #ddd;border-radius:10px">
+        <label for="mew-b2b-material" style="display:block;margin-bottom:.5rem;font-weight:500" data-translate-key="b2b_label_material">Интерес за Материјал *</label>
+        <select id="mew-b2b-material" required style="width:100%;padding:12px;border:2px solid #ddd;border-radius:10px">
           <option value="">-- Избери --</option>
           <option value="rpet">♻️ rPET (чист)</option>
           <option value="rhdpe">♻️ rHDPE</option>
@@ -2150,8 +2235,8 @@
         </select>
       </div>
       <div style="margin-bottom:1.5rem">
-        <label style="display:block;margin-bottom:.5rem;font-weight:500" data-translate-key="b2b_label_volume">Проценет Годишен Волумен (kg)</label>
-        <input type="number" min="100" placeholder="На пр. 5000" style="width:100%;padding:12px;border:2px solid #ddd;border-radius:10px">
+        <label for="mew-b2b-volume" style="display:block;margin-bottom:.5rem;font-weight:500" data-translate-key="b2b_label_volume">Проценет Годишен Волумен (kg)</label>
+        <input id="mew-b2b-volume" type="number" min="100" placeholder="На пр. 5000" style="width:100%;padding:12px;border:2px solid #ddd;border-radius:10px">
       </div>
       <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;font-size:1.05rem">
         <i class="fas fa-paper-plane"></i> <span data-translate-key="b2b_btn_submit">Испрати Барање</span>
@@ -2165,6 +2250,7 @@
 </div>
   <!-- ===== LOCAL PARTNERS SECTION ===== -->
   <section class="section" id="local-partners" style="background:#f8f9fa">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title">
         <h2 data-translate-key="local_partners_title">🇲🇰 Локални Партнери во Македонија</h2>
@@ -2324,6 +2410,7 @@
 
   <!-- ===== AI AGENTS ===== -->
   <section class="section" id="ai" style="background:#f8f9fa">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title">
         <h2 data-translate-key="ai_title">🤖 Проактивни AI Агенти</h2>
@@ -2389,6 +2476,7 @@
 
   <!-- ===== SECURITY ===== -->
   <section class="section" id="security">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title">
         <h2 data-translate-key="security_title">🔐 Безбедносна Заштита</h2>
@@ -2429,15 +2517,15 @@
           <div class="levels">
             <div class="level-badge"><span class="level-icon">🌱</span><div class="level-name" data-translate-key="level_newbie">Еко-Новач</div><div class="level-range">0-50 поени</div></div>
             <div class="level-badge"><span class="level-icon">🌿</span><div class="level-name" data-translate-key="level_hero">Зелен Херој</div><div class="level-range">51-200 поени</div></div>
-            <div class="level-badge active"><span class="level-icon">🌳</span><div class="level-name" data-translate-key="level_guardian">Планетарен Чувач</div><div class="level-range">201-500 поени</div></div>
+            <div class="level-badge"><span class="level-icon">🌳</span><div class="level-name" data-translate-key="level_guardian">Планетарен Чувач</div><div class="level-range">201-500 поени</div></div>
             <div class="level-badge"><span class="level-icon">🌍</span><div class="level-name" data-translate-key="level_leader">Глобален Лидер</div><div class="level-range">500+ поени</div></div>
           </div>
           <div style="margin-top:2rem;text-align:center">
             <span style="background:rgba(255,255,255,.25);padding:10px 24px;border-radius:50px;font-weight:600;display:inline-flex;align-items:center;gap:8px"><i class="fas fa-gift"></i> <span data-translate-key="gamification_rewards">Награди: Поп-пусти • Бесплатни производи • Донации за екологија</span></span>
           </div>
           <div style="margin-top:1.5rem">
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:.5rem"><span style="font-size:.95rem" data-translate-key="gamification_progress">Напредок кон следно ниво:</span><span id="levelProgress" style="font-weight:600">38%</span></div>
-            <div class="progress-container"><div class="progress-bar" id="progressBar" style="width:38%"></div></div>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:.5rem"><span style="font-size:.95rem" data-translate-key="gamification_progress">Напредок кон следно ниво:</span><span id="levelProgress" style="font-weight:600">0%</span></div>
+            <div class="progress-container"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
           </div>
         </div>
       </div>
@@ -2447,6 +2535,7 @@
 
   <!-- ===== SECTION 1: ESG BLOCKCHAIN LEDGER ===== -->
   <section class="section" id="blockchain" style="background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:#fff">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title" style="color:#fff">
         <h2 style="color:#fff">⛓️ ESG Blockchain Ledger</h2>
@@ -2489,6 +2578,7 @@
 
   <!-- ===== SECTION 2: WECHAT MINI PROGRAM & ALIPAY ===== -->
   <section class="section" id="china-ready" style="background:#fff">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title">
         <h2>🇨🇳 China-Ready: WeChat & Alipay</h2>
@@ -2573,6 +2663,7 @@
 
   <!-- ===== SECTION 3: AI COMPUTER VISION ===== -->
   <section class="section" id="ai-vision" style="background:#f8f9fa">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title">
         <h2>🤖 AI Computer Vision: Повеќе од Баркод</h2>
@@ -2632,6 +2723,7 @@
 
   <!-- ===== SECTION 4: SMART IOT DASHBOARD ===== -->
   <section class="section" id="iot" style="background:#0f172a;color:#fff">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title" style="color:#fff">
         <h2 style="color:#fff">🏭 Smart IoT Dashboard</h2>
@@ -2691,6 +2783,7 @@
 
   <!-- ===== SECTION 5: NFT DIGITAL TWIN BADGES ===== -->
   <section class="section" id="nft-badges" style="background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);color:#fff">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title" style="color:#fff">
         <h2 style="color:#fff">🎖️ NFT Digital Twin Беџови</h2>
@@ -2741,6 +2834,7 @@
 
   <!-- ===== SECTION 6: WHITE-LABEL API ===== -->
   <section class="section" id="api" style="background:#fff">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title">
         <h2>📊 White-Label API за Супермаркети</h2>
@@ -2804,7 +2898,7 @@
         <h3 style="color:var(--dark);margin-bottom:1rem"><i class="fas fa-code"></i> <span data-translate-key="api_dev_title">За Развивачи</span></h3>
         <p style="color:#666;max-width:700px;margin:0 auto 1.5rem">API ключеви, sandbox околина, и техничка поддршка достапни за сите верифицирани партнери.</p>
         <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap">
-          <a href="mailto:api@makedonecoworld.com" class="btn btn-primary" style="padding:12px 28px"><i class="fas fa-key"></i> Побарај API Клуч</a>
+          <a href="mailto:makedonecoworld@outlook.com" class="btn btn-primary" style="padding:12px 28px"><i class="fas fa-key"></i> Побарај API Клуч</a>
           <button class="btn btn-outline" style="padding:12px 28px" onclick="downloadSpecs()"><i class="fas fa-book"></i> API Документација</button>
         </div>
       </div>
@@ -2813,6 +2907,7 @@
 
   <!-- ===== SECTION 7: MANDARIN AI & LEGAL COMPLIANCE ===== -->
   <section class="section" id="mandarin-ai" style="background:linear-gradient(135deg,#fff5f5,#ffe0e0)">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title">
         <h2>🌏 中文 Mandarin AI & Кинеска Регулатива</h2>
@@ -2889,6 +2984,7 @@
 
   <!-- ===== UJP TAX INCENTIVE SECTION ===== -->
   <section class="section" id="tax-incentive" style="background:linear-gradient(135deg,#1a237e,#283593,#3949ab);color:#fff">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title" style="color:#fff">
         <h2 style="color:#fff">🏛️ УЈП Интеграција: „Мој Еко ДДВ“</h2>
@@ -2957,7 +3053,7 @@
       </div>
 
       <div style="margin-top:2.5rem;display:flex;justify-content:center;gap:1rem;flex-wrap:wrap">
-        <a href="mailto:ujp@makedonecoworld.com" class="btn btn-white btn-cta" style="padding:14px 32px;font-size:1.05rem">
+        <a href="mailto:makedonecoworld@outlook.com" class="btn btn-white btn-cta" style="padding:14px 32px;font-size:1.05rem">
           <i class="fas fa-landmark"></i> Партнерство со УЈП
         </a>
         <button class="btn btn-outline-white btn-cta" style="padding:14px 32px;font-size:1.05rem" onclick="downloadSpecs()">
@@ -2970,6 +3066,7 @@
 
   <!-- ===== MEDIA CENTER ===== -->
   <section class="section" id="media-center" style="background:#fff">
+<div class="mew-banner" role="note" data-translate-key="media_note">ИЛУСТРАТИВНА МЕДИУМСКА СОДРЖИНА · Старите вести, интервјуа, датуми и проценти се примерни, не потврдени објави.</div>
     <div class="container">
       <div class="section-title">
         <h2>📰 Медиумски Центар</h2>
@@ -2998,7 +3095,7 @@
               </div>
               <h4 style="color:var(--dark);margin-bottom:.8rem">🌍 Makedon Eco World официјално стартува пилот програма</h4>
               <p style="color:#555">Платформата за глобално рециклирање со валутизација на EcoPoints денес ја започнува својата пилот фаза во Скопје, во партнерство со Пакомак МК и КАМ.</p>
-              <div style="margin-top:1rem"><a href="#" style="color:var(--primary);text-decoration:none;font-weight:500"><i class="fas fa-arrow-right"></i> Прочитај повеќе</a></div>
+              <div style="margin-top:1rem"><a href="#mew-governance" data-mew-placeholder="true" aria-disabled="true" style="color:var(--primary);text-decoration:none;font-weight:500"><i class="fas fa-arrow-right"></i> Прочитај повеќе</a></div>
             </div>
           </div>
           <div class="card" style="border-left:4px solid #3498db">
@@ -3009,7 +3106,7 @@
               </div>
               <h4 style="color:var(--dark);margin-bottom:.8rem">🤝 Потпишан МоУ со УЈП за даночен стимул</h4>
               <p style="color:#555">Makedon Eco World и Управата за јавни приходи потпишаа Меморандум за разбирање за воведување на даночен попуст за рециклирање.</p>
-              <div style="margin-top:1rem"><a href="#" style="color:var(--primary);text-decoration:none;font-weight:500"><i class="fas fa-arrow-right"></i> Прочитај повеќе</a></div>
+              <div style="margin-top:1rem"><a href="#mew-governance" data-mew-placeholder="true" aria-disabled="true" style="color:var(--primary);text-decoration:none;font-weight:500"><i class="fas fa-arrow-right"></i> Прочитај повеќе</a></div>
             </div>
           </div>
           <div class="card" style="border-left:4px solid #f39c12">
@@ -3020,7 +3117,7 @@
               </div>
               <h4 style="color:var(--dark);margin-bottom:.8rem">⚡ Интеграција со Huawei Cloud и Xiaomi IoT</h4>
               <p style="color:#555">Платформата сега поддржува Huawei 5G IoT сензори и Xiaomi smart hardware за автомати, со оптимизација за развивачки пазари.</p>
-              <div style="margin-top:1rem"><a href="#" style="color:var(--primary);text-decoration:none;font-weight:500"><i class="fas fa-arrow-right"></i> Прочитај повеќе</a></div>
+              <div style="margin-top:1rem"><a href="#mew-governance" data-mew-placeholder="true" aria-disabled="true" style="color:var(--primary);text-decoration:none;font-weight:500"><i class="fas fa-arrow-right"></i> Прочитај повеќе</a></div>
             </div>
           </div>
         </div>
@@ -3180,7 +3277,7 @@
                 <div style="display:flex;justify-content:space-between;margin-bottom:.3rem"><span>Паркови / Јавни простори</span><span>10%</span></div>
                 <div style="height:8px;background:#eee;border-radius:4px"><div style="width:10%;height:100%;background:var(--accent);border-radius:4px"></div></div>
               </div>
-              <div style="text-align:center;margin-top:1rem"><button class="btn btn-outline" style="padding:8px 20px;font-size:.9rem"><i class="fas fa-vote-yea"></i> Гласај</button></div>
+              <div style="text-align:center;margin-top:1rem"><label for="mew-poll-place">Локален избор / Lokalni odabir</label><select id="mew-poll-place" class="mew-form-input"><option value="">—</option><option value="market">Маркет / Trgovina</option><option value="station">Бензинска / Benzinska postaja</option><option value="park">Парк / Park</option></select><button type="button" class="btn btn-outline" onclick="mewSavePoll('place')" data-translate-key="poll_save">Зачувај локален избор</button></div>
             </div>
             <div style="background:#fff;border-radius:12px;padding:1.5rem;box-shadow:var(--card-shadow)">
               <h4 style="margin-bottom:1rem">2. Каква награда најмногу ве мотивира?</h4>
@@ -3190,7 +3287,7 @@
                 <label style="display:flex;align-items:center;gap:8px;padding:1rem;background:#f8f9fa;border-radius:8px;cursor:pointer"><input type="radio" name="nagrada"> 🌳 Донации</label>
                 <label style="display:flex;align-items:center;gap:8px;padding:1rem;background:#f8f9fa;border-radius:8px;cursor:pointer"><input type="radio" name="nagrada"> 🏆 Беџови</label>
               </div>
-              <div style="text-align:center;margin-top:1rem"><button class="btn btn-primary" style="padding:8px 20px;font-size:.9rem"><i class="fas fa-paper-plane"></i> Испрати</button></div>
+              <div style="text-align:center;margin-top:1rem"><button type="button" class="btn btn-primary" onclick="mewSavePoll('reward')" data-translate-key="poll_save">Зачувај локален избор</button></div>
             </div>
           </div>
         </div>
@@ -3243,6 +3340,7 @@
 
   <!-- ===== HIDDEN CARD #6: LENS PROTOCOL + DAO GOVERNANCE ===== -->
   <section class="section" id="lens-dao" style="background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);color:#fff">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title" style="color:#fff">
         <h2 style="color:#fff">🌿 Lens Protocol + DAO Governance</h2>
@@ -3279,6 +3377,7 @@
 
   <!-- ===== HIDDEN CARD #7: PREDICTIVE ANALYTICS DASHBOARD ===== -->
   <section class="section" id="predictive" style="background:linear-gradient(135deg,#0a0a0a,#1a1a2e,#16213e);color:#fff">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title" style="color:#fff">
         <h2 style="color:#fff">📊 Predictive Analytics Dashboard</h2>
@@ -3325,6 +3424,7 @@
 
   <!-- ===== HIDDEN CARD #1: STARLINK + SOLAR OFF-GRID ===== -->
   <section class="section" id="offgrid" style="background:linear-gradient(135deg,#0a0a0a,#1a1a2e,#16213e);color:#fff">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title" style="color:#fff">
         <h2 style="color:#fff">🛰️ Starlink + Solar Off-Grid</h2>
@@ -3390,6 +3490,7 @@
 
   <!-- ===== HIDDEN CARD #2: "HEY ECO" VOICE AI ===== -->
   <section class="section" id="voice-ai" style="background:linear-gradient(135deg,#1a1a2e,#0f3460,#16213e);color:#fff">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title" style="color:#fff">
         <h2 style="color:#fff">🎙️ „Hey Eco" — Voice AI Assistant</h2>
@@ -3457,6 +3558,7 @@
 
   <!-- ===== HIDDEN CARD #3: METAVERSE ECO WORLD ===== -->
   <section class="section" id="metaverse" style="background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);color:#fff">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title" style="color:#fff">
         <h2 style="color:#fff">🌐 Metaverse Eco World — 3D Виртуелна Планета</h2>
@@ -3504,6 +3606,7 @@
 
   <!-- ===== HIDDEN CARD #4: SMART CONTRACT ESCROW ===== -->
   <section class="section" id="smart-contract" style="background:linear-gradient(135deg,#0a0a0a,#1a1a1a,#2d2d2d);color:#fff">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title" style="color:#fff">
         <h2 style="color:#fff">⚡ Smart Contract Escrow</h2>
@@ -3554,6 +3657,7 @@
 
   <!-- ===== HIDDEN CARD #5: GOVERNMENT TAX INCENTIVE API ===== -->
   <section class="section" id="gov-api" style="background:linear-gradient(135deg,#1a237e,#283593,#3949ab);color:#fff">
+<div class="mew-banner" role="note" data-translate-key="concept_note">РАЗВОЕН КОНЦЕПТ · Стари проектни примери и непотврдени бројки; нема активна интеграција или потврден партнер.</div>
     <div class="container">
       <div class="section-title" style="color:#fff">
         <h2 style="color:#fff">🎖️ Government Tax Incentive API</h2>
@@ -3643,7 +3747,7 @@
     <div class="container">
       <div class="section-title" style="color:#fff">
         <h2 style="color:#fff;font-family:var(--font-display)">📊 Инвеститорски ROI Калкулатор</h2>
-        <p style="color:rgba(255,255,255,.6)">Реален breakeven модел базиран на германскиот Pfand систем и македонскиот пазар</p>
+        <p style="color:rgba(255,255,255,.6)">Илустративен финансиски модел; сценарио, не инвестициско ветување</p>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start" class="roi-grid">
         <!-- LEFT: Inputs -->
@@ -3674,6 +3778,7 @@
             <input type="range" id="roi-invest" min="10000" max="1000000" value="100000" step="10000" oninput="calcROI()" style="width:100%;accent-color:#00c853">
             <div style="display:flex;justify-content:space-between;color:rgba(255,255,255,.5);font-size:.8rem;margin-top:.3rem"><span>€10K</span><span id="roi-invest-val" style="color:#00c853;font-weight:700">€100,000</span><span>€1M</span></div>
           </div>
+          <div style="margin-top:1.25rem"><label for="roi-operating" style="color:#fff" data-translate-key="roi_cost">Годишни оперативни трошоци (€), претпоставка</label><input class="mew-form-input" type="number" id="roi-operating" min="0" step="1" max="1000000000" value="3000"></div>
         </div>
         <!-- RIGHT: Results -->
         <div>
@@ -3681,19 +3786,19 @@
             <h3 style="color:#00c853;margin-bottom:2rem;font-family:var(--font-display);font-size:1.3rem">📈 Проекции</h3>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
               <div style="text-align:center">
-                <div id="roi-daily" style="font-size:2.2rem;font-weight:800;font-family:var(--font-display);color:#00c853">€270</div>
+                <div id="roi-daily" style="font-size:2.2rem;font-weight:800;font-family:var(--font-display);color:#00c853">—</div>
                 <div style="color:rgba(255,255,255,.5);font-size:.8rem;margin-top:.3rem;text-transform:uppercase;letter-spacing:.5px">Дневен Приход</div>
               </div>
               <div style="text-align:center">
-                <div id="roi-monthly" style="font-size:2.2rem;font-weight:800;font-family:var(--font-display);color:#00c853">€8,100</div>
+                <div id="roi-monthly" style="font-size:2.2rem;font-weight:800;font-family:var(--font-display);color:#00c853">—</div>
                 <div style="color:rgba(255,255,255,.5);font-size:.8rem;margin-top:.3rem;text-transform:uppercase;letter-spacing:.5px">Месечен Приход</div>
               </div>
               <div style="text-align:center">
-                <div id="roi-annual" style="font-size:2.2rem;font-weight:800;font-family:var(--font-display);color:#4ade80">€97,200</div>
+                <div id="roi-annual" style="font-size:2.2rem;font-weight:800;font-family:var(--font-display);color:#4ade80">—</div>
                 <div style="color:rgba(255,255,255,.5);font-size:.8rem;margin-top:.3rem;text-transform:uppercase;letter-spacing:.5px">Годишен Приход</div>
               </div>
               <div style="text-align:center">
-                <div id="roi-breakeven" style="font-size:2.2rem;font-weight:800;font-family:var(--font-display);color:#fbbf24">12.3 мес.</div>
+                <div id="roi-breakeven" style="font-size:2.2rem;font-weight:800;font-family:var(--font-display);color:#fbbf24">—</div>
                 <div style="color:rgba(255,255,255,.5);font-size:.8rem;margin-top:.3rem;text-transform:uppercase;letter-spacing:.5px">Breakeven</div>
               </div>
             </div>
@@ -3704,22 +3809,23 @@
               <div style="color:rgba(255,255,255,.4);font-size:.75rem;margin-top:.3rem">Шишиња/Ден</div>
             </div>
             <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--border-radius-sm);padding:1.2rem;text-align:center">
-              <div id="roi-co2" style="font-size:1.4rem;font-weight:800;font-family:var(--font-display);color:#4ade80">135kg</div>
-              <div style="color:rgba(255,255,255,.4);font-size:.75rem;margin-top:.3rem">CO₂/Ден</div>
+              <div id="roi-co2" style="font-size:1.4rem;font-weight:800;font-family:var(--font-display);color:#4ade80">—</div>
+              <div style="color:rgba(255,255,255,.4);font-size:.75rem;margin-top:.3rem" data-translate-key="roi_net">Годишен нето оперативен резултат</div>
             </div>
             <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--border-radius-sm);padding:1.2rem;text-align:center">
-              <div id="roi-percent" style="font-size:1.4rem;font-weight:800;font-family:var(--font-display);color:#a78bfa">97%</div>
+              <div id="roi-percent" style="font-size:1.4rem;font-weight:800;font-family:var(--font-display);color:#a78bfa">—</div>
               <div style="color:rgba(255,255,255,.4);font-size:.75rem;margin-top:.3rem">ROI (год. 1)</div>
             </div>
           </div>
           <div style="background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);border-radius:var(--border-radius-sm);padding:1.2rem;margin-top:1rem;text-align:center">
-            <p style="color:rgba(255,255,255,.6);font-size:.85rem;margin:0"><i class="fas fa-info-circle" style="color:#fbbf24;margin-right:6px"></i>Моделот е базиран на германскиот Pfand (98% ROI) и норвешкиот Infinitum систем. Провизијата на MEW: 3% per трансакција.</p>
+            <p style="color:rgba(255,255,255,.6);font-size:.85rem;margin:0"><i class="fas fa-info-circle" style="color:#fbbf24;margin-right:6px"></i><span data-translate-key="roi_note">Илустративен модел со 3% претпоставена провизија и внесени трошоци. Нема гарантиран принос, исплати или CO₂ резултати.</span></p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <section class="section mew-integration" id="mew-governance"><div class="container"><div class="mew-status"><h2 data-translate-key="status_title">Статус и правила на пилотот</h2><p data-translate-key="status_desc">Независна развојна иницијатива на World Protocol Academy. Локален дневник, GTIN проверка и сценарија се тестни алатки. Другите прикажани модули се проектни концепти, не активни услуги.</p><p style="margin-top:1rem" data-translate-key="status_privacy">Нема сметки, лозинки, картички или централизирано складирање во овој пилот. Камерата е доброволна и локална. Надворешните мрежни ресурси имаат сопствени правила за приватност.</p><p class="mew-note" data-translate-key="hr_legacy">Хрватскиот превод ги опфаќа главните означени интерфејсни текстови; деталните стари проектни материјали делумно остануваат на оригиналниот јазик.</p><div class="mew-links"><a href="mailto:makedonecoworld@outlook.com">makedonecoworld@outlook.com</a><a href="https://github.com/worldprotocolacademy-code/makedon-eco-world/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT licence</a><a href="https://worldprotocolacademy.mk/" target="_blank" rel="noopener noreferrer">World Protocol Academy</a></div></div></div></section>
   <!-- ===== CTA ===== -->
   <section class="container">
     <div class="cta">
@@ -3745,51 +3851,51 @@
           </div>
           <p style="color:#ccc;line-height:1.7;margin-bottom:1.5rem;font-size:1rem" data-translate-key="footer_desc">Првата светска платформа за собирање шишиња со глобална валутизација на поени. Секој предмет има вредност. Секој корисник е херој.</p>
           <div class="social-links">
-            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-            <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-            <a href="#" aria-label="WeChat"><i class="fab fa-weixin"></i></a>
+            <a href="#mew-governance" data-mew-placeholder="true" aria-disabled="true" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#mew-governance" data-mew-placeholder="true" aria-disabled="true" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#mew-governance" data-mew-placeholder="true" aria-disabled="true" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#mew-governance" data-mew-placeholder="true" aria-disabled="true" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#mew-governance" data-mew-placeholder="true" aria-disabled="true" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#mew-governance" data-mew-placeholder="true" aria-disabled="true" aria-label="WeChat"><i class="fab fa-weixin"></i></a>
           </div>
           <p style="color:#aaa;font-size:.95rem;margin-top:1.2rem">📧 <a href="mailto:makedonecoworld@outlook.com" style="color:var(--primary)">makedonecoworld@outlook.com</a></p>
           <p style="color:#888;font-size:.85rem;margin-top:.5rem">👨‍⚕️ <strong>Innovator & Founder:</strong> Doc. d-r Sande Smiljanov</p>
-          <p style="color:#888;font-size:.85rem;margin-top:.3rem">⚜️ <strong>Intellectual Property:</strong> This platform and all innovations are permanently patented and registered under <strong>Doc. d-r Sande Smiljanov</strong>. Ownership remains with the Innovator regardless of any acquisition, partnership, or licensing model. All rights reserved. © 2026</p>
-          <p style="color:#888;font-size:.85rem;margin-top:.8rem">🌿 Powered by Lens Technology (中国) | 🤖 AI Partner: Kimi (Moonshot AI)</p>
+          <p style="color:#aaa;font-size:.85rem;margin-top:.3rem">⚜️ Original project attribution: Doc. d-r Sande Smiljanov. Repository software licence: MIT. No patent, registration or certification claim.</p>
+          <p style="color:#aaa;font-size:.85rem;margin-top:.8rem">🌿 Lens Technology and AI providers: research and future integration concepts only.</p>
         </div>
         <div class="footer-col">
           <h3 data-translate-key="footer_platform">Платформа</h3>
           <ul>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_how">Како Функционира</span></a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_map">Мапа на Точки</span></a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_partners">Партнерски Програми</span></a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_api">API Документација</span></a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_status">Статус на Системот</span></a></li>
+            <li><a href="#howItWorks"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_how">Како Функционира</span></a></li>
+            <li><a href="#map"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_map">Мапа на Точки</span></a></li>
+            <li><a href="#global-malls"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_partners">Партнерски Програми</span></a></li>
+            <li><a href="#api"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_api">API Документација</span></a></li>
+            <li><a href="#mew-governance"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_status">Статус на Системот</span></a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h3 data-translate-key="footer_financial">Финансии</h3>
           <ul>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_convert">Конверзија на Поени</span></a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_payout">Методи на Исплата</span></a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_tax">Даночни Информации</span></a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_fees">Провизии и Цени</span></a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_security">Финансиска Безбедност</span></a></li>
+            <li><a href="#eco-ledger"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_convert">Конверзија на Поени</span></a></li>
+            <li><a href="#financial"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_payout">Методи на Исплата</span></a></li>
+            <li><a href="#tax-incentive"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_tax">Даночни Информации</span></a></li>
+            <li><a href="#investor-roi"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_fees">Провизии и Цени</span></a></li>
+            <li><a href="#security"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_security">Финансиска Безбедност</span></a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h3 data-translate-key="footer_support">Поддршка</h3>
           <ul>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_faq">Често Поставувани Прашања</span></a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_contact">Контакт Формулар</span></a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_help">Центар за Помош</span></a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_report">Пријави Проблем</span></a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_blog">Блог и Новости</span></a></li>
+            <li><a href="#mew-governance"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_faq">Често Поставувани Прашања</span></a></li>
+            <li><a href="mailto:makedonecoworld@outlook.com"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_contact">Контакт Формулар</span></a></li>
+            <li><a href="#mew-governance"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_help">Центар за Помош</span></a></li>
+            <li><a href="mailto:makedonecoworld@outlook.com"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_report">Пријави Проблем</span></a></li>
+            <li><a href="#media-center"><i class="fas fa-chevron-right"></i> <span data-translate-key="footer_blog">Блог и Новости</span></a></li>
           </ul>
         </div>
       </div>
       <div class="copyright">
-        <p>&copy; 2026 Makedon Eco World. Сите права задржани. | Дизајнирано со ❤️ за почиста планета | <a href="#">Политика за Приватност</a> | <a href="#">Услови за Користење</a></p>
+        <p>&copy; 2026 Makedon Eco World. Сите права задржани. | Дизајнирано со ❤️ за почиста планета | <a href="#mew-governance">Политика за Приватност / Privacy</a> | <a href="#mew-governance">Услови за Користење / Terms</a></p>
         <p style="margin-top:.5rem;font-size:.95rem;opacity:.85" data-translate-key="footer_note">Платформата е во развој. Партнерство со Пакомак МК и глобални еколошки организации.</p>
       </div>
     </div>
@@ -3801,7 +3907,7 @@
     <div style="max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap">
       <div style="display:flex;align-items:center;gap:10px">
         <span style="width:8px;height:8px;background:#00c853;border-radius:50%;animation:pulse 2s infinite"></span>
-        <span style="color:rgba(255,255,255,.7);font-size:.9rem">Бесплатно регистрирај се и почни да заработуваш</span>
+        <span style="color:rgba(255,255,255,.7);font-size:.9rem"><span data-translate-key="guest_note">Не е потребна сметка или лозинка. Дневникот е локален; поените се симболични.</span></span>
       </div>
       <div style="display:flex;gap:.8rem">
         <button onclick="openModal('loginModal')" style="background:var(--gradient);border:none;color:#fff;padding:10px 24px;border-radius:50px;cursor:pointer;font-weight:700;font-size:.9rem;font-family:var(--font-display);box-shadow:var(--glow)">🌱 Започни Сега</button>
@@ -3827,12 +3933,12 @@
       <button class="modal-close" onclick="closeModal('scanModal')" aria-label="Затвори">&times;</button>
       <h3 id="scanTitle" style="color:var(--dark);margin-bottom:1rem;font-size:1.5rem"><i class="fas fa-qrcode"></i> <span data-translate-key="scan_modal_title">Скенирај Предмет</span></h3>
       <p style="color:#666;margin-bottom:1.2rem;font-size:1rem" data-translate-key="scan_modal_desc">Насочи ја камерата кон баркодот или логото на шишето/лименката. Осигурај се дека е добро осветлено.</p>
-      <video id="camera-preview" autoplay playsinline muted></video>
+      <label for="mew-gtin" data-translate-key="gtin_label">GTIN баркод (8, 12, 13 или 14 цифри)</label><input id="mew-gtin" class="mew-form-input" type="text" inputmode="numeric" maxlength="14" autocomplete="off" placeholder="4006381333931"><button type="button" class="btn btn-outline" onclick="mewStartCamera()" data-translate-key="gtin_camera">Вклучи камера ако е поддржана</button><video id="camera-preview" autoplay playsinline muted></video>
       <button class="btn btn-primary" id="captureBtn" style="width:100%;justify-content:center;padding:14px;font-size:1.05rem" onclick="captureAndVerify()"><i class="fas fa-camera"></i> <span data-translate-key="btn_capture">Снимка и Верификација</span></button>
-      <div id="scan-result">
+      <p class="mew-note" data-translate-key="pilot_scan">Проверката на GTIN не носи поени. За евиденција користете го дневникот.</p><div id="scan-result" role="status" aria-live="polite">
         <p id="scan-message" style="font-weight:600;margin-bottom:.5rem;font-size:1.1rem"></p>
         <p id="scan-points" style="color:var(--primary);font-size:1.3rem;font-weight:700"></p>
-        <div id="scan-next-actions" style="margin-top:1rem;display:flex;gap:10px;flex-wrap:wrap"></div>
+        <div id="scan-next-actions" style="margin-top:1rem;display:flex;gap:10px;flex-wrap:wrap"><button type="button" class="btn btn-outline" onclick="openEcoLedger()" data-translate-key="bridge_open">Отвори еко-дневник</button></div>
       </div>
     </div>
   </div>
@@ -3842,18 +3948,7 @@
     <div class="modal-content">
       <button class="modal-close" onclick="closeModal('loginModal')" aria-label="Затвори">&times;</button>
       <h3 id="loginTitle" style="color:var(--dark);margin-bottom:1.5rem;font-size:1.5rem"><i class="fas fa-user"></i> <span data-translate-key="login_modal_title">Најави се или Регистрирај се</span></h3>
-      <form id="loginForm" onsubmit="handleLogin(event)">
-        <div style="margin-bottom:1.2rem">
-          <label for="email" style="display:block;margin-bottom:.5rem;font-weight:500;color:var(--dark)"><span data-translate-key="label_email">Е-пошта</span></label>
-          <input type="email" id="email" required placeholder="tvoj@email.com" style="width:100%;padding:14px;border:2px solid #ddd;border-radius:12px;font-size:1rem">
-        </div>
-        <div style="margin-bottom:1.5rem">
-          <label for="password" style="display:block;margin-bottom:.5rem;font-weight:500;color:var(--dark)"><span data-translate-key="label_password">Лозинка</span></label>
-          <input type="password" id="password" required placeholder="••••••••" style="width:100%;padding:14px;border:2px solid #ddd;border-radius:12px;font-size:1rem">
-        </div>
-        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;font-size:1.05rem"><i class="fas fa-sign-in-alt"></i> <span data-translate-key="btn_login_submit">Најави се</span></button>
-        <p style="text-align:center;margin-top:1.2rem;color:#666;font-size:1rem"><span data-translate-key="login_no_account">Немаш сметка?</span> <a href="#" style="color:var(--primary);text-decoration:none;font-weight:500"><span data-translate-key="btn_register">Регистрирај се бесплатно</span></a></p>
-      </form>
+      <p data-translate-key="guest_note">Не е потребна сметка или лозинка. Дневникот е локален; поените се симболични.</p><div class="mew-modal-actions"><button type="button" class="btn btn-primary" onclick="openEcoLedger()" data-translate-key="bridge_open">Отвори еко-дневник</button></div>
     </div>
   </div>
   
@@ -3882,7 +3977,7 @@
       platformFeePercent: 0.03,
       minPayout: { MK: 100, DE: 5, NO: 50, US: 3, global: 5 },
       exchangeRates: { MKD: 61.5, EUR: 1, USD: 1.08, NOK: 11.2 },
-      supportedLanguages: ['zh', 'ru', 'hi', 'sw', 'ar', 'mk', 'en', 'sq', 'sr', 'bg', 'de'],
+      supportedLanguages: ['zh', 'ru', 'hi', 'sw', 'ar', 'mk', 'en', 'sq', 'sr', 'bg', 'de', 'hr'],
       levels: [
         { name: 'Еко-Новач', threshold: 0, icon: '🌱' },
         { name: 'Зелен Херој', threshold: 50, icon: '🌿' },
@@ -3901,232 +3996,15 @@
       map: null
     };
 
-    // ==================== EMAIL SERVICE (MOCK / READY FOR API) ====================
-    const EmailService = {
-      send: async (to, subject, body) => {
-        console.log(`📧 [EMAIL MOCK] To: ${to} | Subject: ${subject}`);
-        // 🔑 ЗА РЕАЛНА ИНТЕГРАЦИЈА (на пр. Resend/SendGrid):
-        // await fetch(`${CONFIG.apiBaseUrl}/email/send`, { 
-        //   method:'POST', 
-        //   headers:{'Content-Type':'application/json', 'Authorization': 'Bearer YOUR_API_KEY'}, 
-        //   body: JSON.stringify({to, subject, html: body}) 
-        // });
-        return { success: true, id: `mail_${Date.now()}` };
-      }
-    };
-
-    // ==================== AGENT MOCKS ====================
-    class QwenAgent {
-      constructor(config) { this.config = config; }
-      async verifyItem(imageData, metadata) {
-        await new Promise(r => setTimeout(r, 1200 + Math.random()*800));
-        const valid = Math.random() > 0.08;
-        const types = ['plastic','glass','aluminum'];
-        const values = { plastic: 6, glass: 10, aluminum: 8 };
-        const type = types[Math.floor(Math.random()*3)];
-        return {
-          is_valid: valid,
-          item_type: valid ? type : 'invalid',
-          barcode_detected: valid ? `BAR${Math.floor(Math.random()*1e6)}` : null,
-          confidence_score: valid ? (0.87 + Math.random()*0.12).toFixed(2) : 0,
-          deposit_value_mkd: valid ? values[type] : 0,
-          eco_points_earned: valid ? CONFIG.pointsPerItem : 0,
-          message_mk: valid ? `✅ Одлично! Добивте 1 EcoPoint за ова ${type === 'plastic' ? 'пластично шише' : type === 'glass' ? 'стаклено шише' : 'лименка'}.` : '❌ Овој предмет не е прифатлив. Обидете се со друг.',
-          next_suggestion: valid ? ['scan_more', 'view_points', 'invite_friend'][Math.floor(Math.random()*3)] : 'try_again'
-        };
-      }
-    }
-
-    class GPTAgent {
-      constructor(config) { this.config = config; this.userContext = config.userContext || {}; }
-      async generateResponse(userMessage, history) {
-        await new Promise(r => setTimeout(r, 600 + Math.random()*400));
-        const points = this.userContext.total_points || 0;
-        const level = CONFIG.levels.slice().reverse().find(l => points >= l.threshold) || CONFIG.levels[0];
-        const nextLevel = CONFIG.levels.find(l => l.threshold > points);
-        const progress = nextLevel ? Math.min(100, Math.round((points - level.threshold) / (nextLevel.threshold - level.threshold) * 100)) : 100;
-        const messages = [
-          `Здраво ${this.userContext.name || 'Пријателе'}! 🌱`,
-          `Твоето ниво: ${level.icon} ${level.name}`,
-          `Имаш ${points} EcoPoints`,
-          nextLevel ? `Уште ${nextLevel.threshold - points} поени до ${nextLevel.name}!` : 'Честитки, го достигна највисокото ниво! 🎉',
-          '',
-          'Што сакаш да направиш денес?',
-          '• 📸 Скенрај ново шише',
-          '• 💰 Конвертирај поени во пари',
-          '• 🎁 Види ги наградите',
-          '• 👥 Покани пријател'
-        ].join('\n');
-        return {
-          message: messages,
-          suggested_action: { type: 'scan', label: 'Скенрај ново шише →', deep_link: 'ecopoints://scan' },
-          gamification_trigger: {
-            show_confetti: points > 0 && points % 50 === 0,
-            badge_unlocked: points === 50 ? '🏆 Прв Херој' : points === 200 ? '🌟 Планетарен Шампион' : null,
-            level_progress: { current: level.name, next: nextLevel?.name || 'MAX', percent: progress }
-          }
-        };
-      }
-    }
-
-    class ClaudeAgent {
-      constructor(config) { this.regulations = this._loadRegulations(); }
-      _loadRegulations() {
-        return {
-          MK: { deposit_active: false, min_age: 16, data_retention_days: 730, tax_rate: 0, currency: 'MKD' },
-          DE: { deposit_active: true, min_age: 18, data_retention_days: 2555, tax_rate: 0.19, currency: 'EUR' },
-          NO: { deposit_active: true, min_age: 13, data_retention_days: 1825, tax_rate: 0.22, currency: 'NOK' },
-          US: { deposit_active: false, min_age: 18, data_retention_days: 1825, tax_rate: 0.15, currency: 'USD' }
-        };
-      }
-      async checkCompliance(countryCode) {
-        await new Promise(r => setTimeout(r, 500));
-        const reg = this.regulations[countryCode] || this.regulations.MK;
-        return {
-          compliant: true,
-          recommendations: reg.deposit_active ? [] : ['Размисли за партнерство со локални рециклери наместо депозит модел'],
-          min_age: reg.min_age,
-          tax_rate: reg.tax_rate,
-          currency: reg.currency,
-          legal_note: `Усогласено со регулативите во ${countryCode}`
-        };
-      }
-    }
-
-    class HarveyAgent {
-      constructor(config) { this.stripeKey = config.stripeKey; this.taxDB = config.taxDB || {}; }
-      async calculatePayout(userId, ecoPoints, targetCurrency) {
-        await new Promise(r => setTimeout(r, 1000));
-        const grossEur = ecoPoints * CONFIG.baseValueEur;
-        const fee = grossEur * CONFIG.platformFeePercent;
-        const userCountry = 'MK';
-        const taxRate = this.taxDB[userCountry]?.payout_tax_rate || 0;
-        const tax = (grossEur - fee) * taxRate;
-        const netEur = grossEur - fee - tax;
-        const rate = CONFIG.exchangeRates[targetCurrency] || 1;
-        const netAmount = netEur * rate;
-        const minPayout = CONFIG.minPayout[userCountry] || CONFIG.minPayout.global;
-        if (netAmount < minPayout) {
-          return { 
-            status: 'PENDING_THRESHOLD', 
-            message_mk: `💰 Потребни се уште ${(minPayout - netAmount).toFixed(2)} ${targetCurrency} за исплата`, 
-            current_net: netAmount.toFixed(2), 
-            threshold: minPayout,
-            points_needed: Math.ceil((minPayout - netAmount) / (CONFIG.baseValueEur * rate))
-          };
-        }
-        return {
-          status: 'READY_FOR_PAYOUT',
-          breakdown: { gross: (grossEur * rate).toFixed(2), fee: (fee * rate).toFixed(2), tax: (tax * rate).toFixed(2), net: netAmount.toFixed(2), currency: targetCurrency },
-          payout_intent_id: `pi_${Date.now()}_${Math.random().toString(36).substr(2,9)}`,
-          estimated_arrival: '1-3 работни дена',
-          compliance_note: 'Трансакцијата е комплајантна со регулативите во ' + userCountry
-        };
-      }
-    }
-
     // ==================== CORE FUNCTIONS ====================
-    function initAgents() {
-      state.agents.qwen = new QwenAgent({ apiKey: 'mock-key', region: 'balkans' });
-      state.agents.gpt = new GPTAgent({ apiKey: 'mock-key', userContext: { name: 'Санде', total_points: state.ecoPoints, country: 'MK', language: 'mk' } });
-      state.agents.claude = new ClaudeAgent({ apiKey: 'mock-key' });
-      state.agents.harvey = new HarveyAgent({ stripeKey: 'mock-stripe-key', taxDB: { MK: { payout_tax_rate: 0 } } });
-      console.log('🤖 AI Agents initialized for', CONFIG.appName);
-    }
+    // Legacy simulated email/AI/payment classes removed from the active page.
+    function initAgents() {}
 
-    function initMap() {
-      if (state.map) return;
-      state.map = L.map('map').setView([41.9973, 21.4280], 13);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors | Makedon Eco World'
-      }).addTo(state.map);
-      const markers = [
-        { coords: [41.9973, 21.4280], title: 'Пакомак Центар', type: 'pakomak' },
-        { coords: [42.0050, 21.4350], title: 'Веро Супермаркет', type: 'store' },
-        { coords: [41.9920, 21.4200], title: 'Автомат за Шишиња', type: 'vending' },
-        { coords: [42.0100, 21.4400], title: 'Скопје Сити Мол', type: 'mall' }
-      ];
-      const icons = {
-        pakomak: L.divIcon({ className: 'custom-marker', html: '<div style="background:#2ecc71;width:20px;height:20px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.2)"></div>' }),
-        store: L.divIcon({ className: 'custom-marker', html: '<div style="background:#3498db;width:20px;height:20px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.2)"></div>' }),
-        vending: L.divIcon({ className: 'custom-marker', html: '<div style="background:#f39c12;width:20px;height:20px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.2)"></div>' }),
-        mall: L.divIcon({ className: 'custom-marker', html: '<div style="background:#9b59b6;width:20px;height:20px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.2)"></div>' })
-      };
-      markers.forEach(m => {
-        L.marker(m.coords, { icon: icons[m.type] }).addTo(state.map)
-          .bindPopup(`<strong>${m.title}</strong><br><small>Отворено 08:00-22:00</small>`);
-      });
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(pos => {
-          L.marker([pos.coords.latitude, pos.coords.longitude], {
-            icon: L.divIcon({ className: 'user-marker', html: '<div style="background:#e74c3c;width:16px;height:16px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.3)"></div>' })
-          }).addTo(state.map).bindPopup('📍 Ти си тука').openPopup();
-          state.map.setView([pos.coords.latitude, pos.coords.longitude], 14);
-        }, () => {}, { enableHighAccuracy: true, timeout: 5000 });
-      }
-    }
+    function initMap() { showToast('Info','Use the official operator links below.','error'); }
 
-    async function startScan() {
-      openModal('scanModal');
-      document.getElementById('scan-result').classList.remove('active', 'success', 'error');
-      document.getElementById('captureBtn').disabled = false;
-      document.getElementById('captureBtn').innerHTML = '<i class="fas fa-camera"></i> <span data-translate-key="btn_capture">Снимка и Верификација</span>';
-      if (navigator.mediaDevices?.getUserMedia) {
-        try {
-          state.cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } } });
-          const video = document.getElementById('camera-preview');
-          video.srcObject = state.cameraStream;
-          video.classList.add('active');
-          video.play().catch(() => {});
-        } catch (err) {
-          console.warn('Camera access denied:', err);
-          document.getElementById('scan-message').textContent = '📷 Камерата не е достапна. Можеш да пратиш слика од галеријата.';
-          document.getElementById('scan-result').classList.add('active');
-        }
-      } else {
-        document.getElementById('scan-message').textContent = '⚠️ Твојот браузер не поддржува камера. Користи мобилен уред.';
-        document.getElementById('scan-result').classList.add('active');
-      }
-    }
+    function startScan() { openModal('scanModal'); }
 
-    async function captureAndVerify() {
-      const video = document.getElementById('camera-preview');
-      if (!video.srcObject) { showToast('Грешка', 'Камерата не е активирана. Обиди се повторно.', 'error'); return; }
-      const canvas = document.createElement('canvas');
-      canvas.width = video.videoWidth || 1280; canvas.height = video.videoHeight || 720;
-      canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-      const imageData = canvas.toDataURL('image/jpeg', 0.85);
-      document.getElementById('captureBtn').disabled = true;
-      document.getElementById('captureBtn').innerHTML = '<span class="loading loading-dark"></span> <span data-translate-key="btn_verifying">Верификација во тек...</span>';
-      try {
-        const verification = await state.agents.qwen.verifyItem(imageData, { timestamp: new Date().toISOString(), location: navigator.geolocation ? 'detected' : 'unknown' });
-        const resultEl = document.getElementById('scan-result'), msgEl = document.getElementById('scan-message'), ptsEl = document.getElementById('scan-points');
-        msgEl.textContent = verification.message_mk;
-        ptsEl.textContent = verification.is_valid ? `+${verification.eco_points_earned} EcoPoint` : '';
-        resultEl.className = `active ${verification.is_valid ? 'success' : 'error'}`;
-        if (verification.is_valid) {
-          state.ecoPoints += verification.eco_points_earned;
-          document.getElementById('userPoints').textContent = state.ecoPoints;
-          document.getElementById('resultPoints').textContent = state.ecoPoints;
-          updateLevelProgress();
-          const celebration = await state.agents.gpt.generateResponse(`Скенирав успешно!`, []);
-          if (celebration.gamification_trigger.show_confetti) triggerConfetti();
-          if (celebration.gamification_trigger.badge_unlocked) showToast('🏆 Нов Беџ!', `Освоивте: ${celebration.gamification_trigger.badge_unlocked}`, 'success');
-          document.getElementById('scan-next-actions').innerHTML = `<button class="btn btn-primary" onclick="startScan()" style="padding:8px 16px;font-size:.9rem"><i class="fas fa-redo"></i> <span data-translate-key="btn_scan_again">Скенрај уште</span></button><button class="btn btn-outline" onclick="closeModal('scanModal');scrollToSection('financial')" style="padding:8px 16px;font-size:.9rem"><i class="fas fa-coins"></i> <span data-translate-key="btn_view_points">Види Поени</span></button>`;
-          showToast('Успешно!', verification.message_mk, 'success');
-        } else {
-          document.getElementById('scan-next-actions').innerHTML = `<button class="btn btn-primary" onclick="startScan()" style="padding:8px 16px;font-size:.9rem"><i class="fas fa-redo"></i> <span data-translate-key="btn_retry">Обиди се повторно</span></button>`;
-        }
-      } catch (error) {
-        console.error('Scan error:', error);
-        document.getElementById('scan-message').textContent = '❌ Се појави грешка при верификација. Обидете се повторно.';
-        document.getElementById('scan-result').classList.add('active', 'error');
-        showToast('Грешка', 'Проблем со верификацијата. Провери ја интернет врската.', 'error');
-      } finally {
-        document.getElementById('captureBtn').disabled = false;
-        document.getElementById('captureBtn').innerHTML = '<i class="fas fa-camera"></i> <span data-translate-key="btn_capture">Снимка и Верификација</span>';
-      }
-    }
+    function captureAndVerify() { showToast('Info','GTIN module unavailable.','error'); }
 
     function triggerConfetti() {
       const colors = ['#2ecc71', '#3498db', '#f39c12', '#e74c3c', '#9b59b6', '#1abc9c', '#34495e'];
@@ -4147,34 +4025,15 @@
       }
     }
 
-    function updateLevelProgress() {
-      const points = state.ecoPoints;
-      const currentLevel = CONFIG.levels.slice().reverse().find(l => points >= l.threshold) || CONFIG.levels[0];
-      const nextLevel = CONFIG.levels.find(l => l.threshold > points);
-      const progress = nextLevel ? Math.min(100, Math.round((points - currentLevel.threshold) / (nextLevel.threshold - currentLevel.threshold) * 100)) : 100;
-      document.getElementById('levelProgress').textContent = progress + '%';
-      document.getElementById('progressBar').style.width = progress + '%';
-      document.querySelectorAll('.level-badge').forEach(b => b.classList.remove('active'));
-      const activeBadge = Array.from(document.querySelectorAll('.level-badge')).find(b => b.querySelector('.level-name').textContent === currentLevel.name);
-      if (activeBadge) activeBadge.classList.add('active');
-    }
+    function updateLevelProgress() {}
 
     function closeModal(modalId) {
       document.getElementById(modalId).classList.remove('active');
       if (state.cameraStream) { state.cameraStream.getTracks().forEach(track => track.stop()); state.cameraStream = null; }
     }
     function openModal(modalId) { document.getElementById(modalId).classList.add('active'); if (modalId === 'scanModal') initMap(); }
-    async function handleLogin(e) {
-      e.preventDefault();
-      const email = document.getElementById('email')?.value?.trim();
-      if (!email || !email.includes('@')) { showToast('Грешка', 'Внеси валидна е-пошта.', 'error'); return; }
-      state.currentUser = { id: 'user_' + Date.now(), name: email.split('@')[0], email: email, country: 'MK', language: 'mk' };
-      closeModal('loginModal');
-      showToast('Добредојде!', `Здраво, ${state.currentUser.name}! 🌱 Почни со собирање.`, 'success');
-      updateLevelProgress();
-      document.getElementById('userPoints').textContent = state.ecoPoints;
-      try { await EmailService.send(email, '👋 Добредојде во MEW', `Вашата сметка е успешно креирана. Почни со собирање!`); } catch(err) { console.warn('Email send failed:', err); }
-    }
+    function handleLogin(e) { e.preventDefault(); scrollToSection('eco-ledger'); }
+    function handleB2BRequest(e){e.preventDefault();showToast('Info','Local draft module unavailable.','error');}
     function showToast(title, message, type = 'success') {
       const toast = document.getElementById('toast');
       document.getElementById('toast-title').textContent = title;
@@ -4185,41 +4044,14 @@
     }
     function scrollToSection(id) { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }); }
     function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-    function downloadSpecs() {
-      const specs = `# Makedon Eco World – Технички Спецификации
-## Контакти: ${CONFIG.contactEmail}
-## API Base: ${CONFIG.apiBaseUrl}
-## AI Агенти: Qwen (верификација), GPT (конверзација), Claude (комплајанса), Harvey (финансии)
-## Финансиски: 1 сисе = 1 EcoPoint = €${CONFIG.baseValueEur} | Провизија: ${(CONFIG.platformFeePercent*100).toFixed(0)}%
-## Безбедност: TLS 1.3+, PCI DSS, 2FA, токенизација
-## Нивоа: ${CONFIG.levels.map(l => `${l.icon} ${l.name}: ${l.threshold}+ поени`).join(' | ')}
-*Генерирано: ${new Date().toISOString()} | Верзија: 10.0.0*`;
-      const blob = new Blob([specs], { type: 'text/markdown' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href = url; a.download = 'MakedonEcoWorld_Specs.md'; a.click();
-      URL.revokeObjectURL(url);
-      showToast('Преземено!', 'Спецификациите се преземени. 📄', 'success');
-    }
-    function calculateEarnings() {
-      const bottles = parseInt(document.getElementById('bottles')?.value) || 0;
-      const cans = parseInt(document.getElementById('cans')?.value) || 0;
-      const total = bottles + cans;
-      const country = document.getElementById('country')?.value || 'global';
-      // ✅ РЕАЛИСТИЧНИ СТАПКИ: MK=0.03€ (DRS proposal), DE=0.25€ (Pfand), NO=0.23€ (Infinitum), US=0.10€, Global avg=0.18€
-      const rates = { mk: 0.03, de: 0.25, no: 0.23, us: 0.10, global: 0.18 };
-      const euroValue = (total * (rates[country] || rates.global)).toFixed(2);
-      // CO2 saved: ~15g per bottle/can recycled vs landfill
-      const co2Grams = total * 15;
-      const co2Display = co2Grams >= 1000 ? (co2Grams/1000).toFixed(2)+'kg' : co2Grams+'g';
-      const resultEl = document.getElementById('resultValue'), pointsEl = document.getElementById('resultPoints');
-      const co2El = document.getElementById('co2Saved');
-      if (resultEl && pointsEl) { resultEl.textContent = `€${euroValue}`; pointsEl.textContent = total; resultEl.classList.add('result-pulse'); setTimeout(() => resultEl.classList.remove('result-pulse'), 2000); }
-      if (co2El) co2El.textContent = co2Display;
-    }
+    function downloadSpecs() { showToast('Info','Specification module unavailable.','error'); }
+    function calculateEarnings() {}
 
     // ==================== GLOBAL MALLS & EUROPEAN PARTNERS LOGIC ====================
     const PARTNERS = [
-      // 🇪🇺 ЕВРОПСКИ ПАРТНЕРИ
+      // 🇪🇺 ЕВРОПСКИ ПОТЕНЦИЈАЛНИ ОРГАНИЗАЦИИ
+      {region:'eu',flag:'🇭🇷',name:'FZOEU',city:'Хрватска / Hrvatska',note:'Официјален извор за повратна накнада; не е партнер на MEW.',priority:'high'},
+      {region:'eu',flag:'🇭🇷',name:'Čistoća Zadar',city:'Задар / Zadar, Hrvatska',note:'Официјален локален оператор и извор за локации; не е партнер на MEW.',priority:'high'},
       {region:'eu',flag:'🇳🇴',name:'TOMRA',city:'Норвешка',note:'Светски лидер во РВМ автомати. Партнер за хардвер & софтвер интеграција.',priority:'critical'},
       {region:'eu',flag:'🇩🇪',name:'Schwarz (Lidl/Kaufland)',city:'Германија',note:'12,000+ локации. Стратешки партнер за дистрибуција и пилот програми.',priority:'critical'},
       {region:'eu',flag:'🇫🇷',name:'Carrefour',city:'Франција',note:'30+ земји. Пилот во Балканот + Clubcard интеграција.',priority:'high'},
@@ -4303,7 +4135,7 @@
       calculateEarnings();
       
       // Иницијализирај навигација
-      document.querySelectorAll('nav a[href^="#"]').forEach(a => { a.addEventListener('click', e => { e.preventDefault(); document.querySelectorAll('nav a').forEach(l => l.classList.remove('active')); a.classList.add('active'); const target = document.querySelector(a.getAttribute('href')); if (target) { target.scrollIntoView({ behavior: 'smooth' }); if (a.getAttribute('href') === '#features') initMap(); }}); });
+      document.querySelectorAll('nav a[href^="#"]').forEach(a => { a.addEventListener('click', e => { e.preventDefault(); document.querySelectorAll('nav a').forEach(l => l.classList.remove('active')); a.classList.add('active'); const href=a.getAttribute("href");if(href==="#"){scrollToTop();return;}const target=document.getElementById(href.slice(1));if(target)target.scrollIntoView({behavior:"smooth"});}); });
       
       // Иницијализирај модали
       document.querySelectorAll('.modal').forEach(modal => { modal.addEventListener('click', e => { if (e.target === modal) closeModal(modal.id); }); });
@@ -4311,7 +4143,7 @@
       
       // Иницијализирај партнери (глобални + европски)
       renderMalls();
-      const tabs = document.querySelectorAll('.mall-tab');
+      const tabs = document.querySelectorAll('.mall-tab[data-region]');
       tabs.forEach(t => t.addEventListener('click', () => {
         tabs.forEach(x => x.classList.remove('active'));
         t.classList.add('active');
@@ -4322,15 +4154,15 @@
       if (search) search.addEventListener('input', () => renderMalls(search.value));
       
       // Иницијализирај превод - sync со language selector
-      const _initLang = localStorage.getItem('mew_lang') || 'mk';
+      const _initLang = mewSafeGet('mew_lang') || 'mk';
       translatePage(_initLang);
       const _langSel = document.getElementById('language-selector');
       if (_langSel) _langSel.value = _initLang;
       
-      console.log('🌱 Makedon Eco World v10.0 Initialized | 💰 MK Pricing (€0.03/item) | 🌐 Translation Engine Active | 🇪🇺 EU+Global Partners');
+      console.log('Makedon Eco World v11 development pilot initialized');
     });
     
-    if ('serviceWorker' in navigator) { window.addEventListener('load', () => { console.log('🔧 Service Worker ready'); }); }
+    // No service worker is registered by this release.
     window.addEventListener('resize', () => { const hideMobile = document.querySelectorAll('.hide-mobile'); if (window.innerWidth < 480) hideMobile.forEach(el => el.style.display = 'none'); else hideMobile.forEach(el => el.style.display = ''); });
     window.dispatchEvent(new Event('resize'));
   
@@ -4387,42 +4219,10 @@
     });
 
     // ==================== INVESTOR ROI CALCULATOR ====================
-    function calcROI() {
-      const cities = parseInt(document.getElementById('roi-cities').value) || 3;
-      const machines = parseInt(document.getElementById('roi-machines').value) || 20;
-      const bottles = parseInt(document.getElementById('roi-bottles').value) || 150;
-      const valueSlider = parseInt(document.getElementById('roi-value').value) || 3;
-      const invest = parseInt(document.getElementById('roi-invest').value) || 100000;
-      
-      const valuePerBottle = valueSlider / 100; // slider 1-25 = €0.01-€0.25
-      const platformFee = 0.03; // 3% commission
-      
-      const totalBottles = cities * machines * bottles;
-      const dailyRevenue = totalBottles * valuePerBottle * platformFee;
-      const monthlyRevenue = dailyRevenue * 30;
-      const annualRevenue = dailyRevenue * 365;
-      const breakeven = invest / monthlyRevenue;
-      const roi1yr = ((annualRevenue - invest) / invest * 100);
-      const co2daily = totalBottles * 0.015; // 15g per bottle
-      
-      // Update displays
-      document.getElementById('roi-cities-val').textContent = cities + ' ' + (cities === 1 ? 'град' : 'градови');
-      document.getElementById('roi-machines-val').textContent = machines + ' автомати';
-      document.getElementById('roi-bottles-val').textContent = bottles + '/ден';
-      document.getElementById('roi-value-val').textContent = '€' + valuePerBottle.toFixed(2) + '/шише';
-      document.getElementById('roi-invest-val').textContent = '€' + invest.toLocaleString();
-      
-      document.getElementById('roi-daily').textContent = '€' + dailyRevenue.toFixed(0);
-      document.getElementById('roi-monthly').textContent = '€' + monthlyRevenue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      document.getElementById('roi-annual').textContent = '€' + annualRevenue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      document.getElementById('roi-breakeven').textContent = breakeven < 120 ? breakeven.toFixed(1) + ' мес.' : '>10 год.';
-      document.getElementById('roi-bottles-total').textContent = totalBottles.toLocaleString();
-      document.getElementById('roi-co2').textContent = co2daily >= 1000 ? (co2daily/1000).toFixed(1) + 't' : co2daily.toFixed(0) + 'kg';
-      document.getElementById('roi-percent').textContent = roi1yr > 0 ? roi1yr.toFixed(0) + '%' : 'негативен';
-    }
+    function calcROI() {}
     
     // Init ROI calculator
-    setTimeout(calcROI, 100);
+    setTimeout(()=>calcROI(), 100);
 
     // ==================== MEDIA CENTER TABS ====================
     function showMediaTab(tabName) {
@@ -4437,5 +4237,6 @@
       if (activeBtn) activeBtn.classList.add('active');
     }
 </script>
+<script src="mew-integrated-v11.js"></script>
 </body>
 </html>
