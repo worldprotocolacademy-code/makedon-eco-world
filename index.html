@@ -949,6 +949,37 @@
     :focus-visible{outline:2px solid #00c853;outline-offset:3px}
 </style>
 <style id="mew-v11-integrated-style">
+/* Mobile acceptance: keep content inside the viewport; tables scroll locally. */
+@media(max-width:768px){
+ .container,.header-content,.section,.hero,footer,.cta{min-width:0;max-width:100%;overflow-wrap:anywhere}
+ .container{width:100%;padding-inline:16px}
+ .section [style*="grid-template-columns"],.grid,.calc-grid,.mall-grid,.footer-grid,.roi-grid{grid-template-columns:minmax(0,1fr)!important}
+ .section [style*="display:grid"]>*,.grid>*,.calc-grid>*,.mall-grid>*,.footer-grid>*{min-width:0;max-width:100%}
+ .section [style*="display:flex"],.mew-links,.hero-stats,.auth-buttons{flex-wrap:wrap;min-width:0;max-width:100%}
+ .section [style*="display:flex"]>*{min-width:0;max-width:100%}
+ .section [style*="padding:2.5rem"],.section [style*="padding:3rem"],.section [style*="padding:2rem"],.calculator,.modal-content{padding:1rem!important}
+ .section table{display:block;width:100%!important;max-width:100%;overflow-x:auto}
+ .section th,.section td{overflow-wrap:anywhere}
+ .section img,.section video,.section iframe,.section input,.section select,.section textarea,.section button,.section a.btn{max-width:100%}
+ .section pre,.section code{white-space:pre-wrap;overflow-wrap:anywhere}
+ .hero h1{font-size:clamp(1.8rem,8vw,2.6rem)!important;letter-spacing:-.04em}
+ .hero .stat-card{min-width:0;flex:1 1 132px;padding:1rem}
+ .hero .stat-number{font-size:clamp(1.25rem,5vw,2rem)}
+ header .header-content{gap:.6rem}
+ header .logo{max-width:100%;font-size:1.1rem}
+ .modal{padding:12px}
+ #toast{max-width:calc(100vw - 32px);right:16px}
+ .btn,.mew-banner{overflow-wrap:anywhere;white-space:normal}
+}
+@media(max-width:480px){
+ .levels{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:.5rem}
+ .level-badge.active{transform:none}
+ .section-title h2{font-size:1.65rem}
+ .section{padding:2.75rem 0}
+ .mew-bridge-grid{grid-template-columns:minmax(0,1fr)}
+ .mew-frame{max-width:100%}
+}
+
 .mew-banner{background:#fff4db;border-left:5px solid #92601b;padding:15px 18px;margin:16px auto;color:#3e2b13;border-radius:10px;line-height:1.55;font-size:.95rem;max-width:1320px}
 .mew-banner a{color:#174c38;text-decoration:underline}
 .mew-hr-summary{background:#eaf7ef;color:#134f36;padding:10px 14px;border-radius:8px;margin-top:10px;font-size:.95rem;text-align:left}
@@ -2486,15 +2517,15 @@
           <div class="levels">
             <div class="level-badge"><span class="level-icon">🌱</span><div class="level-name" data-translate-key="level_newbie">Еко-Новач</div><div class="level-range">0-50 поени</div></div>
             <div class="level-badge"><span class="level-icon">🌿</span><div class="level-name" data-translate-key="level_hero">Зелен Херој</div><div class="level-range">51-200 поени</div></div>
-            <div class="level-badge active"><span class="level-icon">🌳</span><div class="level-name" data-translate-key="level_guardian">Планетарен Чувач</div><div class="level-range">201-500 поени</div></div>
+            <div class="level-badge"><span class="level-icon">🌳</span><div class="level-name" data-translate-key="level_guardian">Планетарен Чувач</div><div class="level-range">201-500 поени</div></div>
             <div class="level-badge"><span class="level-icon">🌍</span><div class="level-name" data-translate-key="level_leader">Глобален Лидер</div><div class="level-range">500+ поени</div></div>
           </div>
           <div style="margin-top:2rem;text-align:center">
             <span style="background:rgba(255,255,255,.25);padding:10px 24px;border-radius:50px;font-weight:600;display:inline-flex;align-items:center;gap:8px"><i class="fas fa-gift"></i> <span data-translate-key="gamification_rewards">Награди: Поп-пусти • Бесплатни производи • Донации за екологија</span></span>
           </div>
           <div style="margin-top:1.5rem">
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:.5rem"><span style="font-size:.95rem" data-translate-key="gamification_progress">Напредок кон следно ниво:</span><span id="levelProgress" style="font-weight:600">38%</span></div>
-            <div class="progress-container"><div class="progress-bar" id="progressBar" style="width:38%"></div></div>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:.5rem"><span style="font-size:.95rem" data-translate-key="gamification_progress">Напредок кон следно ниво:</span><span id="levelProgress" style="font-weight:600">0%</span></div>
+            <div class="progress-container"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
           </div>
         </div>
       </div>
